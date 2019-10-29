@@ -129,8 +129,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'unique_id' => [
+            'unique' => 'The Biometrics Code has already been taken',
         ],
     ],
 

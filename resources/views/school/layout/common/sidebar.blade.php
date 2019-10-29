@@ -35,7 +35,7 @@
   <div id="collapseTwo" class="collapse {{ $activemenu =="a" ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
     <div class="bg-white py-2 collapse-inner rounded"> 
       <a class="collapse-item {{ $activelink =="a1" ? 'active' : '' }}" href="{{ route('school.teacher.create') }}">Add Teachers</a>
-      <a class="collapse-item {{ $activelink =="a2" ? 'active' : '' }}" href="cards.html">View Teachers</a>
+      <a class="collapse-item {{ $activelink =="a2" ? 'active' : '' }}" href="{{ route('school.teacher.view') }}">View Teachers</a>
     </div>
   </div>
 </li>

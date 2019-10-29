@@ -26,5 +26,9 @@ class School extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function employees()
+    {
+        return $this->hasMany('App\Models\School\Employee','school_id'); 
+	} 
 	 
 }

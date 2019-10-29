@@ -97,13 +97,17 @@
               <h6 class="m-0 font-weight-bold text-primary">Upload Attendance</h6>
           </div>
           <div class="card-body">
+          {!! Form::open(array('route' => 'school.teacher.import', 'id' => 'school.teacher.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
+          @csrf
               <input type="file">
               <button type="submit"  class="btn btn-primary">
                             <span class="icon text-white-100">
                                 <i class="fas fa-upload"></i>
                             </span>
                             <span class="text ">Upload</span>
-                        </buttona> 
+                        </button> 
+                        
+              {!! Form::close() !!}
           </div>
       </div>  
       </div> 
