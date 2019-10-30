@@ -20,9 +20,19 @@ Route::group(['prefix'=>'teacher'], function() {
         'uses' => 'School\EmployeeController@view_employees'
     ]);  
 
-    Route::post('/import', [
-        'as' => 'teacher.import',
+    Route::get('/upload', [
+        'as' => 'attendance.upload',
         'middleware' => ['school'],
-        'uses' => 'School\EmployeeController@import'
+        'uses' => 'School\AttendanceController@upload'
+    ]);  
+    Route::post('/import', [
+        'as' => 'attendance.import',
+        'middleware' => ['school'],
+        'uses' => 'School\AttendanceController@import'
+    ]);  
+    Route::post('/savedata', [
+        'as' => 'attendance.savedata',
+        'middleware' => ['school'],
+        'uses' => 'School\AttendanceController@savedata'
     ]);  
 });

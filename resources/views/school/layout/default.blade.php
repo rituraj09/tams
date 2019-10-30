@@ -24,7 +24,7 @@
  
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="startTime()">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -39,7 +39,7 @@
 
       <!-- Main Content -->
       <div id="content">
-
+  
         <!-- Topbar -->
     @include('school.layout.common.top_nav')
         <!-- End of Topbar -->
@@ -123,6 +123,29 @@
 
   <!-- Page level custom scripts -->
 <script src="{{ asset('assets/js/demo/datatables-demo.js')}}"></script>  
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds(); 
+  m = checkTime(m);
+  s = checkTime(s);
+  var ap = "AM";
+   if (h   > 11) { ap = "PM";}
+   if (h   > 12) { h = h - 12; }
+   if (h   == 0) { h = 12;       }
+   if (h   < 10) { h   = "0" + h;   } 
+   var timeString = h + ':' + m + ':' + s + " " + ap;
+  document.getElementById('clock').innerHTML =
+  timeString;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
 </body>
 
 </html>

@@ -40,8 +40,8 @@
   </div>
 </li>
 
-<li class="nav-item  " >
-  <a class="nav-link" href="{{ route('school.home') }}">
+<li class="nav-item  {{ $activelink =="02" ? 'active' : '' }} " >
+  <a class="nav-link " href="{{ route('school.attendance.upload') }}">
     <i class="fas fa-upload"></i>
     <span>Upload attendance</span></a>
 </li>
