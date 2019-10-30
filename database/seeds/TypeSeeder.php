@@ -20,7 +20,8 @@ class TypeSeeder extends Seeder
           DB::table('attendance_types')->insert(array(
             array( 'name' => 'Present'),
             array( 'name' => 'Absent'),
-            array( 'name' => 'Leave')
+            array( 'name' => 'Leave'),
+            array( 'name' => 'MIS')
           )); 
     }
 }

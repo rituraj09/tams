@@ -29,6 +29,10 @@ class School extends Model
     public function employees()
     {
         return $this->hasMany('App\Models\School\Employee','school_id'); 
+    } 
+    public function attendance()
+    {
+        return $this->hasMany('App\Models\School\Attendance','school_id'); 
 	} 
 	 
 }

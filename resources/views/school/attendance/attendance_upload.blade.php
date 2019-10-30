@@ -8,6 +8,7 @@
               <h6 class="m-0 font-weight-bold text-primary">Upload Attendance</h6>
           </div>
           <div class="card-body">
+          @include('include.message')  
           {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
           @csrf
           <input type="file" name="import_file" />
