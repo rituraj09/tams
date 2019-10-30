@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeType extends Model
 {
-    protected $table    = 'employee_types';
-    public $primaryKey  = 'id';
-    public $timestamps  = true;
+    protected $table        = 'employee_types';
+    public $primaryKey      = 'id';
+    public $timestamps      = true;
     protected $fillable 	= array('name');  
     public static $rules 	= [
         'name' 				=> 'required|max:227',   

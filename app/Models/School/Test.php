@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Test extends Model
 {
-    protected $fillable = ['name' ];
+    protected $table        = 'test';
+    protected $fillable     = ['name' ];
+    public static $rules 	= [
+        'name' 				=> 'required|max:227',   
+    ]; 
 }

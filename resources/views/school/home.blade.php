@@ -99,7 +99,7 @@
           <div class="card-body">
           {!! Form::open(array('route' => 'school.teacher.import', 'id' => 'school.teacher.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
           @csrf
-              <input type="file">
+          <input type="file" name="import_file" />
               <button type="submit"  class="btn btn-primary">
                             <span class="icon text-white-100">
                                 <i class="fas fa-upload"></i>

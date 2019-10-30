@@ -9,7 +9,7 @@ use App\Models\School\EmployeeType;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache; 
 use App\Models\School\Test;
-use Maatwebsite\Excel\Facades\Excel;
+use Excel;
 use App\Helpers\Helper;
 
 
@@ -72,13 +72,35 @@ class EmployeeController extends Controller
     }
     public function import(Request $request) 
     {
-         
-       $message->attach($request->file->path(), array(
-        'as'=>'file.' . $request->file->originalName(),
-       'mime' => $request->file->mimeType())
-           );
-         
-        return back()->with('success', 'Insert Record successfully.');
-  
+        $activemenu = 'a';
+        $activelink='a2'; 
+        if($request->hasFile('import_file')){
+            $path = $request->file('import_file')->getRealPath();
+          //  $data = \Excel::load($path)->skipRows(4)->get();
+           // $path = $file->getRealPath();
+            $data = Excel::load($path, function($reader) {
+               // $results = $reader->skipRows(4)->get();             
+                $results = $reader->setHeaderRow(5);
+                return $results;
+            })->get();
+          
+            if($data->count()){
+                foreach ($data as $key => $value) {
+                  // $arr[] = ['name' => $value->name, '' ]; 
+                  if(!$value->emp_code)
+                  {
+                      break;
+                  }
+                   $arr[] = $value->all(); 
+                }  
+                $results = $arr;
+                
+                $date =  date('d-m-Y', strtotime($results[0]['in_time']));  
+                $shift_start = $results[0]['shift_start']->format('H:i:s');  
+                $shift_end = $results[0]['shift_end']->format('H:i:s');      
+                $school_id=  Auth::user()->id; 
+                return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+            } 
+        } 
     }
 }

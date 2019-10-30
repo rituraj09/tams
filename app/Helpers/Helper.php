@@ -2,6 +2,7 @@
 namespace App\Helpers;
 use DB, Validator, Redirect, Auth, Crypt;
 use App\Models\School\EmployeeType;
+use App\Models\School\Employee;
  
 class Helper
 {
@@ -16,4 +17,10 @@ class Helper
 		return DB::table('employee_types')->orderBy('id','asc')->get();
         
     } 
+    public static function getname($id, $school_id)
+    {         
+        $emp = Employee::whereStatus(1)->where('unique_id', $id)->where('school_id', $school_id)->first();
+     
+        return  $emp;     
+    }
 }
