@@ -54,11 +54,31 @@ class AttendanceController extends Controller
                     $results = $reader->skipColumns(1)->takeColumns(2)->get();
                      return $results;
                  })->get();
+                 $dtt = date('Y-m-d', strtotime($dateval[0][0]));  
                 $date =    date('d-m-Y', strtotime($dateval[0][0]));   
+                
                 $shift_start = $results[0]['shift_start']->format('H:i:s');  
                 $shift_end = $results[0]['shift_end']->format('H:i:s');      
                 $school_id=  Auth::user()->id; 
-                return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                $attndc = Attendance::whereStatus(1)->where('school_id', $school_id )->where('date',  $dtt )->first();
+                 
+                if(!empty($attndc))
+                {
+                        if($attndc->upload_status  == 0)
+                        {
+                            return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                        }
+                        else
+                        { 
+                            $class      = 'failed'; 
+                            $msg      = 'Upload of attendance for '.$date.' has been closed.';   
+                            return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);   
+                        }
+                }
+                else
+                {
+                    return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                }
             } 
         } 
     }
@@ -69,6 +89,7 @@ class AttendanceController extends Controller
         $dt = $data['date'];
         $val =[];
         $val['school_id']  = $data['school_id'];
+        $val['remarks']  = $data['reason'];
         $val['date'] =  date('Y-m-d', strtotime($data['date']));  
         $count = Attendance::whereStatus(1)->where('school_id', $val['school_id'] )->where('date', $val['date'] )->count();
         if($count<1)
@@ -102,7 +123,10 @@ class AttendanceController extends Controller
                     $arr['in_time'] =   $in_time[$k] ; 
                     $arr['out_time'] =   $out_time[$k] ; 
                     $arr['attendance_type'] = $attendance_type[$k];
-                    $arr['remarks'] = $remarks[$k];
+                    if(!empty($remarks[$k]))
+                    {
+                        $arr['remarks'] = $remarks[$k];
+                    }
                     $attendanceemp = AttendanceEmployee::create($arr); 
                 }
                 if($attendanceemp) {
@@ -118,6 +142,7 @@ class AttendanceController extends Controller
             $attndc = Attendance::whereStatus(1)->where('school_id', $val['school_id'] )->where('date', $val['date'] )->first();
             if($attndc) 
             {            
+                
                 $sl = $request->sl ;
                 $unique_id = $request->unique_id ; 
                 $out_time =  $request->out_time ;
@@ -144,12 +169,17 @@ class AttendanceController extends Controller
                         } 
                         $attnd->out_time  = $out_time[$k] ;  
                         $attnd->attendance_type  = $attendance_type[$k];
-                        $attnd->remarks = $remarks[$k];    
-                        $attnd->save();   
-                        $class      = 'success'; 
-                        $msg      = 'Attendance for '.$dt.' has been successfully updated.';         
+                        $attnd->remarks = $remarks[$k];   
+                        $attnd->save();         
                     }
                 }  
+
+                
+                $attndx = Attendance::find($attndc->id);  
+                $attndx->upload_status = 1;   
+                $attndx->save();  
+                $class      = 'success'; 
+                $msg      = 'Attendance for '.$dt.' has been successfully updated.';   
             }        
             DB::commit(); 
         }

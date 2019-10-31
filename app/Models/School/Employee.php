@@ -32,4 +32,8 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Models\School\EmployeeType','employee_type'); 
     }
+    public function emp()
+    {
+        return $this->hasMany('App\Models\School\EmpLocal','unique_id'); 
+    }
 }

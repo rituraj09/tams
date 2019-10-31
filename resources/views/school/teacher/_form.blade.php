@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-6">
         <div class="input-group">
-            {!! Form::text('dob', null, ['id' => 'dob', 'class' => 'form-control   border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10',    'autocomplete' => 'off' ]) !!}
+            {!! Form::text('dob', null, ['id' => 'dob', 'class' => 'form-control datepicker  border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10',    'autocomplete' => 'off' ]) !!}
             <span class="input-group-append">
                 <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
             </span>
@@ -106,7 +106,7 @@
         </div>
         <div class="col-md-6">
         <div class="input-group">
-            {!! Form::text('doj', null, ['class' => 'form-control   border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10', 'id' => 'doj',   'autocomplete' => 'off' ]) !!}
+            {!! Form::text('doj', null, ['class' => 'form-control  datepicker border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10', 'id' => 'doj',   'autocomplete' => 'off' ]) !!}
             <span class="input-group-append">
                 <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
             </span>
@@ -122,7 +122,7 @@
         </div>
         <div class="col-md-6">
         <div class="input-group">
-            {!! Form::text('dor', null, ['class' => 'form-control   border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10', 'id' => 'dor',   'autocomplete' => 'off', 'required' => 'true']) !!}
+            {!! Form::text('dor', null, ['class' => 'form-control  datepicker border-1 small',  'placeholder' => 'dd-mm-yyyy', 'onblur' => 'ValidateDate(this, event.keyCode)',  'onkeydown' => 'return DateFormat(this, event.keyCode)', 'onfocus'=>'this.select()',  'maxlength'=>'10', 'id' => 'dor',   'autocomplete' => 'off', 'required' => 'true']) !!}
             <span class="input-group-append">
                 <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
             </span>

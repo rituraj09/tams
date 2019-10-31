@@ -9,9 +9,10 @@
  <a class="nav-link"   title="Date & Time"  aria-haspopup="true" aria-expanded="false">
 
       <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary   small"> 
-      <i class="fa fa-calendar"></i> <i id="todate"></i> 
-      //
-       <i class="fa fa-clock"></i> <i id="clock"></i></span> 
+      
+      <i class="fa fa-calendar"></i> <i id="todate"></i> |
+      
+      <i class="fa fa-clock"></i> <i id="clock"></i></span> 
     </a>
 
  </li>
@@ -20,8 +21,10 @@
   <!-- Nav Item - User Information -->
   <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="mr-2 d-none d-lg-inline text-gray-600 small">Golaghat Govt. High School</span>
-       <img class="img-profile rounded-circle" src="{{ asset('assets/img/avatar-mini.jpg')}}">
+      <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->name }} </span>
+      <div>
+      <i class="fa fa-university round text-dark"></i>
+      </div> 
     </a>
     <!-- Dropdown - User Information -->
     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

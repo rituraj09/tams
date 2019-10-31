@@ -9,7 +9,7 @@ class Attendance extends Model
     protected $table    = 'attendances';
     public $primaryKey  = 'id';
     public $timestamps  = true;
-    protected $fillable 	= array('date','school_id','remarks');   
+    protected $fillable 	= array('date','school_id','remarks','upload_status');   
     public function school()
     {
         return $this->belongsTo('App\Models\Admin\School','school_id'); 

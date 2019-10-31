@@ -21,10 +21,23 @@
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css"> 
     <link href="{{ asset('assets/css/addon.css')}}" rel="stylesheet" type="text/css"> 
   
- 
+    <link href="{{ asset('dist/css/bootstrap/zebra_datepicker.css') }}" rel="stylesheet" rel="stylesheet">
+    <link href="{{ asset('dist/css/bootstrap/zebra_datepicker.min.css') }}" rel="stylesheet" rel="stylesheet">
+
+ <style>
+   .blinking {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
 </head>
 
-<body id="page-top" onload="startTime()">
+<body id="page-top" onload="onload()">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -96,10 +109,10 @@
         </div>
       </div>
     </div>
-  </div>
-
+  </div> 
   <!-- Bootstrap core JavaScript-->
   
+  @include('school.json.script')
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script> 
 <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>  
 
@@ -113,8 +126,8 @@
 <script src="{{ asset('assets/vendor/chart.js/Chart.min.js')}}"></script>  
 
   <!-- Page level custom scripts -->
-<script src="{{ asset('assets/js/demo/chart-area-demo.js')}}"></script>  
-<script src="{{ asset('assets/js/demo/chart-pie-demo.js')}}"></script>  
+  
+<script src="{{ asset('assets/js/demo/chart-area-demo.js')}}"></script>   
 
 
   <!-- Page level plugins -->
@@ -123,7 +136,12 @@
 
   <!-- Page level custom scripts -->
 <script src="{{ asset('assets/js/demo/datatables-demo.js')}}"></script>  
+
+
 <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 function startTime() {
   var today = new Date();
   var dd = today.getDate();
@@ -131,19 +149,25 @@ function startTime() {
   var y = today.getFullYear();
   var h = today.getHours();
   var m = today.getMinutes();
-  var s = today.getSeconds(); 
+  var s = today.getSeconds();
   m = checkTime(m);
-  s = checkTime(s);
+  s = checkTime(s); 
   var ap = "AM";
    if (h   > 11) { ap = "PM";}
    if (h   > 12) { h = h - 12; }
    if (h   == 0) { h = 12;       }
    if (h   < 10) { h   = "0" + h;   } 
    var timeString = h + ':' + m + ':' + s + " " + ap;
-   var todate = dd + '-' + mnth + '-' + y;
+
   document.getElementById('clock').innerHTML =timeString;
-  document.getElementById('todate').innerHTML = todate;
-  timeString;
+  var dd = today.getDate();
+  var mm= today.getMonth()+1;
+  var Y = today.getFullYear();   
+  var todates = dd + '-' + mm + '-' + Y;
+  document.getElementById('todate').innerHTML = todates; 
+
+
+
   var t = setTimeout(startTime, 500);
 }
 function checkTime(i) {

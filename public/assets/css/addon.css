@@ -6,3 +6,8 @@
 .control-label{
     padding:6px 20px;
 }
+.round {
+    padding: 3px;
+    border-radius: 50px;
+    border: 1px solid #101011; 
+  }
