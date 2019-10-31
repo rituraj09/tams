@@ -6,9 +6,12 @@
  
 
  <li class="nav-item dropdown no-arrow mx-1">
- <a class="nav-link" href="#"    aria-haspopup="true" aria-expanded="false">
+ <a class="nav-link"   title="Date & Time"  aria-haspopup="true" aria-expanded="false">
 
-      <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary   small"> <i class="fa fa-clock"></i> <i id="clock"></i></span> 
+      <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary   small"> 
+      <i class="fa fa-calendar"></i> <i id="todate"></i> 
+      //
+       <i class="fa fa-clock"></i> <i id="clock"></i></span> 
     </a>
 
  </li>

@@ -126,6 +126,9 @@
 <script>
 function startTime() {
   var today = new Date();
+  var dd = today.getDate();
+  var mnth = today.getMonth() + 1;
+  var y = today.getFullYear();
   var h = today.getHours();
   var m = today.getMinutes();
   var s = today.getSeconds(); 
@@ -137,7 +140,9 @@ function startTime() {
    if (h   == 0) { h = 12;       }
    if (h   < 10) { h   = "0" + h;   } 
    var timeString = h + ':' + m + ':' + s + " " + ap;
-  document.getElementById('clock').innerHTML =
+   var todate = dd + '-' + mnth + '-' + y;
+  document.getElementById('clock').innerHTML =timeString;
+  document.getElementById('todate').innerHTML = todate;
   timeString;
   var t = setTimeout(startTime, 500);
 }
