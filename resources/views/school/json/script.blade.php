@@ -1,18 +1,20 @@
-// Set new default font family and font color to mimic Bootstrap's default styling
+<script> 
+function getpie(p,a,l,m)  { 
+    alert("kela");
+   // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
-
-var ctx = document.getElementById("myPieChart");
+var ctx = document.getElementById("myPie");
 var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
-    labels: ["Present", "Absent", "On Leave"],
+    labels: ["Present", "Absent", "On Leave", 'MIS'],
     datasets: [{
-      data: [55, 30, 15],
-      backgroundColor: ['#4e73df', '#e74a3b', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#e74a3b', '#2c9faf'],
+      data: [p,a,l,m],
+      backgroundColor: ['#4e73df', '#e74a3b', '#36b9cc' , '#f9b755'],
+      hoverBackgroundColor: ['#2e59d9', '#e74a3b', '#2c9faf', '#e09e3d'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },
@@ -34,4 +36,5 @@ var myPieChart = new Chart(ctx, {
     cutoutPercentage: 80,
   },
 });
-
+}
+</script>

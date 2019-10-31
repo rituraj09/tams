@@ -8,7 +8,11 @@
  <li class="nav-item dropdown no-arrow mx-1">
  <a class="nav-link" href="#"    aria-haspopup="true" aria-expanded="false">
 
-      <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary   small"> <i class="fa fa-clock"></i> <i id="clock"></i></span> 
+      <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary   small"> 
+      
+      <i class="fa fa-calendar"></i> <i id="todate"></i>//
+      
+      <i class="fa fa-clock"></i> <i id="clock"></i></span> 
     </a>
 
  </li>
@@ -17,7 +21,7 @@
   <!-- Nav Item - User Information -->
   <li class="nav-item dropdown no-arrow">
     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <span class="mr-2 d-none d-lg-inline text-gray-600 small">Golaghat Govt. High School</span>
+      <span class="mr-2 d-none d-lg-inline text-gray-600 small"> {{ Auth::user()->name }} </span>
        <img class="img-profile rounded-circle" src="{{ asset('assets/img/avatar-mini.jpg')}}">
     </a>
     <!-- Dropdown - User Information -->

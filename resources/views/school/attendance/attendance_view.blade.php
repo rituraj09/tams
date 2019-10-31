@@ -35,8 +35,8 @@
                             <th >Shift End</th> 
                             <th >In Time</th> 
                             <th >Out Time</th> 
-                            <th  >Status</th>
-                            @if($provider->secondhalf($date) == 1)
+                            <th  >Status </th>
+                            @if($provider->getattand($date, $school_id) > 0) 
                             <th  >Reason</th>
                             @endif
                         </tr>
@@ -64,30 +64,54 @@
                                 </td>
                                 
                                 <td>
-                                @if(empty($v['in_time'] ))
-                                    <i class="fa fa-flag text-danger"><i>
-                                @else
-                                 {{  $v['in_time']->format('H:i:s')    }}
+                                @if($provider->getattand($date, $school_id) > 0)
+                                <?php $attndid = $provider->getattand($date, $school_id);
+                                $unq_id= $v['emp_code'];
+                                 $attndtype = $provider->getAttendanceType( $unq_id, $attndid)->attendance_type;
+                                ?>
+                                    @if(empty($v['in_time']) && $attndtype == "2")  
+                                        <i class="fa fa-flag text-danger"><i>
+                                     
+                                    @elseif(empty($v['in_time']) && $attndtype == 3)  
+                                        On Leave
+                                    @else
+                                        {{  $v['in_time']->format('H:i:s')    }}
+                                    @endif
+                                @else 
+                                    @if(empty($v['in_time']) )  
+                                        <i class="fa fa-flag text-danger"><i> 
+                                    @else
+                                        {{  $v['in_time']->format('H:i:s')    }}
+                                    @endif
                                 @endif
                                  </td>
                                 <td> 
                                 
-                                @if($provider->secondhalf($date) == 1)
-                                    @if(empty($v['out_time'] ))
-                                    <i class="fa fa-flag text-danger"><i>
+                                @if($provider->getattand($date, $school_id) > 0)
+                                    @if($attndtype == 3)
+                                            On Leave
                                     @else
-                                    {{  $v['out_time']->format('H:i:s')  }}
+                                        @if(empty($v['out_time'] ))
+                                        <i class="fa fa-flag text-danger"><i>
+                                    
+                                        @else
+                                        {{  $v['out_time']->format('H:i:s')  }}
+                                        @endif 
+                                    @endif
+                                @else
+                                    @if(!empty($v['out_time'] )) 
+                                        {{  $v['out_time']->format('H:i:s')  }}
                                     @endif
                                 @endif
                                 </td>       
                                 <td>
                                 
-                                @if($provider->secondhalf($date) == 0)
+                                @if($provider->getattand($date, $school_id) == 0)
 
                                     @if($v['status']=='A')
                                         <select name="attendance_type[]" id="attendance_type">
-                                            <option value="2">Absent</option>
-                                            <option value="3">Leave</option>
+                                            <option value="2" >Absent</option>
+                                            <option value="3"  >Leave</option>
                                         </select>
                                     @else     
                                         Present
@@ -95,7 +119,7 @@
                                     
                                     @endif
                                     
-                                @elseif($provider->secondhalf($date) == 1) 
+                                @elseif($provider->getattand($date, $school_id) > 0) 
 
                                     @if($v['status']=='P')
                                          Present
@@ -103,8 +127,8 @@
 
                                     @elseif($v['status']=='A')
                                         <select name="attendance_type[]" id="attendance_type">
-                                            <option value="2">Absent</option>
-                                            <option value="3">Leave</option>
+                                            <option value="2" {{ $provider->getAttendanceType( $unq_id, $attndid)->attendance_type == 2 ? 'selected' : '' }}>Absent</option>
+                                            <option value="3" {{ $provider->getAttendanceType( $unq_id, $attndid)->attendance_type == 3 ? 'selected' : '' }}>Leave</option>
                                         </select>
                                     @else                                          
                                     {{ Form::hidden('attendance_type[]', 4, array('id' => 'attendance_type')) }} 
@@ -112,15 +136,17 @@
                                     @endif
                                   @endif
                                 </td>
-                                @if($provider->secondhalf($date) == 1)
+                                @if($provider->getattand($date, $school_id) > 0) 
                                 <td>
                                 
-                                    @if($v['status']=='MIS')
+                                    @if(empty($v['out_time']) && !empty($v['in_time']))
                                     <textarea id="remarks" class="form-control" placeholder="Reason must require!" name="remarks[]" required rows="3"></textarea>
                                     @else
                                     {{ Form::hidden('remarks[]', '', array('id' => 'remarks')) }}
                                     @endif
                                 </td>
+                                @else 
+                                    {{ Form::hidden('remarks[]', '', array('id' => 'remarks')) }}
                                 @endif
                             </tr>
                             @endforeach
@@ -131,36 +157,38 @@
                         </div>
                     </div>
 
-                </div>
-            
+                </div>  
                 @if($provider->getattand($date, $school_id) == '0' && $provider->firsthalf($date) == '1')
                 <div class="row">
                      <div class="col-md-12  py-3">
-                         <div class="pull-right col-md-3">  
+                         <div class="pull-right col-md-3">   
+
                          <textarea id="reason" class="form-control" placeholder="Reason of late upload must require!" name="reason" required rows="3"></textarea>    
                          </div> 
                      </div>
                      </div>
-                 @endif
-                 <div class="row">
-                     <div class="col-md-12   py-3">
-                         <div class="pull-right col-auto">
-                                 <a href="{{ route('school.attendance.upload') }}"    class="btn  btn-sm btn-warning btn-icon-split ">
-                             <span class="icon text-white-100">
-                                         <i class="fas fa-arrow-left"></i>
-                                     </span>
-                                     <span class="text ">Back</span>
-                                     </a>
-                             <button type="submit"  class="btn btn-success btn-sm btn-icon-split ">
-                                     <span class="icon text-white-100">
-                                         <i class="fas fa-save"></i>
-                             </span>
-                             <span class="text ">Submit</span>
-                         </button> 
-                         </div>
-                     </div>
-                     </div>
-            </div>
+                @else
+                    {{ Form::hidden('reason', '', array('id' => 'reason')) }}
+                @endif
+                    <div class="row">
+                        <div class="col-md-12   py-3">
+                            <div class="pull-right col-auto">
+                                    <a href="{{ route('school.attendance.upload') }}"    class="btn  btn-sm btn-warning btn-icon-split ">
+                                        <span class="icon text-white-100">
+                                                    <i class="fas fa-arrow-left"></i>
+                                                </span>
+                                                <span class="text ">Back</span>
+                                    </a>
+                                    <button type="submit"  class="btn btn-success btn-sm btn-icon-split ">
+                                            <span class="icon text-white-100">
+                                                <i class="fas fa-save"></i>
+                                        </span>
+                                        <span class="text ">Submit</span>
+                                    </button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
         {!! Form::close() !!}
     </div>

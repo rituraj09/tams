@@ -15,4 +15,8 @@ class AttendanceEmployee extends Model
     {
         return $this->belongsTo('App\Models\Admin\Attendance','attendance_id'); 
     }  
+    public function emp()
+    {
+        return $this->belongsTo('App\Models\School\Emplocal','unique_id'); 
+	} 
 }
