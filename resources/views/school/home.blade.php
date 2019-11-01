@@ -45,10 +45,7 @@
                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $present }}</div>
                   </div>
                   <div class="col">
-                  <input type="hidden" name="p_fld" id="p_fld" value="{{ $p }}" >
-                  <input type="hidden" name="a_fld" id="a_fld" value="{{ $absent }}" >
-                  <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
-                  <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
+            
                   </div>
                 </div>
               </div>
@@ -100,6 +97,10 @@
       <div class="card shadow   mb-4">
           <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Upload Attendance</h6>
+              <input type="hidden" name="p_fld" id="p_fld" value="{{ $p }}" >
+                  <input type="hidden" name="a_fld" id="a_fld" value="{{ $absent }}" >
+                  <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
+                  <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
           </div>
           <div class="card-body">
           {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
@@ -152,15 +153,24 @@
               <canvas id="myPie" ></canvas>
             </div>
             <div class="mt-4 text-center small">
+            
+            @if(!empty($present))
               <span class="mr-2">
                 <i class="fas fa-circle text-primary"></i> Present
               </span>
+              @endif
+              
+              @if(!empty($absent))
               <span class="mr-2">
                 <i class="fas fa-circle text-danger"></i> Absent
               </span>
+              @endif
+              
+              @if(!empty($leave))
               <span class="mr-2">
                 <i class="fas fa-circle text-info"></i> On leave
               </span>
+              @endif
               @if(!empty($mis))
               <span class="mr-2">
                 <i class="fas fa-circle text-warning"></i> MIS

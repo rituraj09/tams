@@ -61,11 +61,12 @@ class AttendanceController extends Controller
                 $shift_end = $results[0]['shift_end']->format('H:i:s');      
                 $school_id=  Auth::user()->id; 
                 $attndc = Attendance::whereStatus(1)->where('school_id', $school_id )->where('date',  $dtt )->first();
-                 
+         
                 if(!empty($attndc))
-                {
+                {   
                         if($attndc->upload_status  == 0)
                         {
+                           
                             return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
                         }
                         else

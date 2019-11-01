@@ -17,6 +17,10 @@ class AttendanceEmployee extends Model
     }  
     public function emp()
     {
-        return $this->belongsTo('App\Models\School\Emplocal','unique_id'); 
-	} 
+        return $this->belongsTo('App\Models\School\Employee','unique_id'); 
+    } 
+    public function attendancetype()
+    {
+        return $this->belongsTo('App\Models\Admin\AttendanceType','attendance_type'); 
+    }  
 }

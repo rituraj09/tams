@@ -11,3 +11,12 @@
     border-radius: 50px;
     border: 1px solid #101011; 
   }
+  .blinking {
+    animation: blinker 1s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }

@@ -64,8 +64,8 @@ class EmployeeController extends Controller
        
     }
     public function view_employees() { 
-       
-        $results = Employee::whereStatus(1)->orderBy('unique_id', 'ASC')->paginate(10);  
+        $uid=  Auth::user()->id; 
+        $results = Employee::whereStatus(1)->where('school_id',$uid)->orderBy('unique_id', 'ASC')->paginate(30);  
         $activemenu = 'a';
         $activelink='a2'; 
         return view('school.teacher.view', compact('results','activelink','activemenu')); 

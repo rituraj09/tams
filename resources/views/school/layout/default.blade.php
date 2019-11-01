@@ -160,8 +160,8 @@ function startTime() {
    var timeString = h + ':' + m + ':' + s + " " + ap;
 
   document.getElementById('clock').innerHTML =timeString;
-  var dd = today.getDate();
-  var mm= today.getMonth()+1;
+  var dd = ("0" + today.getDate()).slice(-2);
+  var mm= ("0" + (today.getMonth() + 1)).slice(-2)
   var Y = today.getFullYear();   
   var todates = dd + '-' + mm + '-' + Y;
   document.getElementById('todate').innerHTML = todates; 

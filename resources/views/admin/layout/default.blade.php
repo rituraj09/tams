@@ -20,11 +20,21 @@
   <!-- Custom styles for this page -->
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css"> 
     <link href="{{ asset('assets/css/addon.css')}}" rel="stylesheet" type="text/css"> 
-  
+    <style>
+   .blinking {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+</style>
  
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="onload()">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -98,6 +108,7 @@
     </div>
   </div>
 
+  @include('admin.json.script')
   <!-- Bootstrap core JavaScript-->
   
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script> 

@@ -40,9 +40,15 @@ class Helper
             return "0";  
         }
     }
-    public static function getAttendanceType( $unique_id, $id )
+    public static function getAttendanceType( $emp_id, $id )
     {         
-        $emp = AttendanceEmployee::whereStatus(1)->where('unique_id', $unique_id)->where('attendance_id', $id)->first();     
+        $emp = AttendanceEmployee::whereStatus(1)->where('unique_id', $emp_id)->where('attendance_id', $id)->first();     
+        return  $emp;     
+    }
+    public static function totalattendance( $date )
+    {         
+        $emp = AttendanceEmployee::join('attendances', 'attendances.id', '=', 'attendance_employees.attendance_id')
+        ->where('attendances.status','1')->where('attendances.status', 1)->where('date', $date)->count();     
         return  $emp;     
     }
     public static function firsthalf($date)
@@ -69,6 +75,123 @@ class Helper
       //  $date = date('d-m-Y H:i:s', strtotime($date)); 
         return $date;
     }
+    public static function teachers($school_id)
+    {
+       
+        $teacher = Employee::whereStatus(1)->where('isactive',1)->where('school_id',$school_id)->count();
+        return $teacher;
+    }
+    public static function attendance( $school_id,$date)
+    {
+        $attend = Attendance::whereStatus(1)->where('date',$date)->where('school_id',$school_id)->first();
+        if($attend)
+        {
+            $attendance = AttendanceEmployee::join('attendances', 'attendances.id', '=', 'attendance_employees.attendance_id')
+            ->where('attendances.status','1')->where('attendances.date',$date)->where('attendances.school_id',$school_id)
+            ->select('attendance_employees.attendance_type as status_count' ,DB::raw('count(attendance_employees.id) as val') )
+            ->groupBy('attendance_type')->orderBy('attendance_type', 'ASC')->get();
+        
+            $mis=0;
+            $present=0;
+            $absent=0;
+            $leave=0;  
+            $p = 0;
+            if(!empty($attendance[0]["val"]))
+            {
+                if($attendance[0]["status_count"]=="1")
+                { 
+                    $present =$attendance[0]["val"];
+                    $p = $present;
+                }
+                if($attendance[0]["status_count"]=="2")
+                { 
+                    $absent =$attendance[0]["val"];
+                }
+                if($attendance[0]["status_count"]=="3")
+                { 
+                    $leave =$attendance[0]["val"];
+                }
+                if($attendance[0]["status_count"]=="4")
+                { 
+                    $mis =$attendance[0]["val"];
+                } 
+            } 
+            if(!empty($attendance[3]["val"]))
+            {
+                if($attendance[3]["status_count"]=="1")
+                { 
+                    $present =$attendance[3]["val"];
+                    $p = $present;
+                }
+                if($attendance[3]["status_count"]=="2")
+                { 
+                    $absent =$attendance[3]["val"];
+                }
+                if($attendance[3]["status_count"]=="3")
+                { 
+                    $leave =$attendance[3]["val"];
+                }
+                if($attendance[3]["status_count"]=="4")
+                { 
+                    $mis =$attendance[3]["val"];
+                } 
+            } 
+            if(!empty($attendance[1]["val"]))
+            {
+                if($attendance[1]["status_count"]=="1")
+                { 
+                    $present =$attendance[1]["val"];
+                    $p = $present;
+                }
+                if($attendance[1]["status_count"]=="2")
+                { 
+                    $absent =$attendance[1]["val"];
+                }
+                if($attendance[1]["status_count"]=="3")
+                { 
+                    $leave =$attendance[1]["val"];
+                }
+                if($attendance[1]["status_count"]=="4")
+                { 
+                    $mis =$attendance[1]["val"];
+                } 
+            } 
+            if(!empty($attendance[2]["val"]))
+            {
+                if($attendance[2]["status_count"]=="1")
+                { 
+                    $present =$attendance[2]["val"];
+                    $p = $present;
+                }
+                if($attendance[2]["status_count"]=="2")
+                { 
+                    $absent =$attendance[2]["val"];
+                }
+                if($attendance[2]["status_count"]=="3")
+                { 
+                    $leave =$attendance[2]["val"];
+                }
+                if($attendance[2]["status_count"]=="4")
+                { 
+                    $mis =$attendance[2]["val"];
+                } 
+            } 
+                $present =   $present+$mis;    
+                $arr = []; 
+                $arr['status'] = 1;
+                $arr['p'] = $present;
+                $arr['a'] = $absent;
+                $arr['l'] = $leave;
+                $arr['m'] = $mis;
+                return $arr; 
+        } 
+        else { 
+            $arr = []; 
+            $arr['status'] = 0;
+            return $arr; 
+        }
+        
     
+    }
     
 }

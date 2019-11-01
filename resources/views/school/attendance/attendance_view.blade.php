@@ -46,16 +46,14 @@
                             @foreach($results as $k => $v)
                             <tr>
                                 <td>{{ $c= $k+1 }}</td>
-                                <?php $uid= $v['emp_code'] ?>
-                                
+                                <?php $uid= $v['emp_code'] ?> 
+                                <?php $emp_id= $provider->getname($uid, $school_id)->id    ?>
                                 {{ Form::hidden('sl[]', $c, array('id' => 'sl')) }}
-                                {{ Form::hidden('unique_id[]', $v['emp_code'], array('id' => 'unique_id')) }}
+                                {{ Form::hidden('unique_id[]', $emp_id, array('id' => 'unique_id')) }}
                                 {{ Form::hidden('shift_start[]', $v['shift_start'], array('id' => 'shift_start')) }}
                                 {{ Form::hidden('shift_end[]', $v['shift_end'], array('id' => 'shift_end')) }}
                                 {{ Form::hidden('in_time[]', $v['in_time'], array('id' => 'in_time')) }}
-                                {{ Form::hidden('out_time[]', $v['out_time'], array('id' => 'out_time')) }} 
-
-
+                                {{ Form::hidden('out_time[]', $v['out_time'], array('id' => 'out_time')) }}  
                                 <td>
                                     @if(empty($provider->getname($uid, $school_id)))
                                     Null
@@ -74,8 +72,8 @@
                                 <td>
                                 @if($provider->getattand($date, $school_id) > 0)
                                 <?php $attndid = $provider->getattand($date, $school_id);
-                                $unq_id= $v['emp_code'];
-                                 $attndtype = $provider->getAttendanceType( $unq_id, $attndid)->attendance_type;
+                                
+                                $attndtype = $provider->getAttendanceType($emp_id, $attndid)->attendance_type;
                                 ?>
                                     @if(empty($v['in_time']) && $attndtype == "2")  
                                         <i class="fa fa-flag text-danger"><i>
@@ -135,8 +133,8 @@
 
                                     @elseif($v['status']=='A')
                                         <select name="attendance_type[]" id="attendance_type">
-                                            <option value="2" {{ $provider->getAttendanceType( $unq_id, $attndid)->attendance_type == 2 ? 'selected' : '' }}>Absent</option>
-                                            <option value="3" {{ $provider->getAttendanceType( $unq_id, $attndid)->attendance_type == 3 ? 'selected' : '' }}>Leave</option>
+                                            <option value="2" {{ $provider->getAttendanceType( $emp_id, $attndid)->attendance_type == 2 ? 'selected' : '' }}>Absent</option>
+                                            <option value="3" {{ $provider->getAttendanceType( $emp_id, $attndid)->attendance_type == 3 ? 'selected' : '' }}>Leave</option>
                                         </select>
                                     @else                                          
                                     {{ Form::hidden('attendance_type[]', 4, array('id' => 'attendance_type')) }} 
