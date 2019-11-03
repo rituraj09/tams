@@ -75,7 +75,7 @@ var m = document.getElementById("m_fld").value;
  
 var ctx = document.getElementById("myPie");
 var myPieChart = new Chart(ctx, {
-  type: 'doughnut',
+  type: 'pie',
   data: {
     labels: ["Present", "Absent", "On Leave", 'MIS'],
     datasets: [{

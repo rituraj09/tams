@@ -50,6 +50,7 @@ class HomeController extends Controller
         ->groupBy('attendance_type')->orderBy('attendance_type', 'ASC')->get();
         $mis=0;
         $present=0;
+        $percent_of_Present=0;
         $absent=0;
         $leave=0;  
         $p = 0;
@@ -134,7 +135,10 @@ class HomeController extends Controller
             } 
         } 
         $present =   $present+$mis;
-        $percent_of_Present = $present*100/$teacher;
+        if($teacher != 0) 
+        {
+            $percent_of_Present = $present*100/$teacher;
+        }
 
         $lastattnd = AttendanceEmployee::join('attendances', 'attendances.id', '=', 'attendance_employees.attendance_id')
         ->where('attendances.status','1')

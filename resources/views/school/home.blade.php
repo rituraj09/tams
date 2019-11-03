@@ -22,7 +22,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Teachers</div>
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Staff</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $teacher}}</div>
               </div>
               <div class="col-auto">
@@ -39,7 +39,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Teachers on Duty</div>
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Today Present</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $present }}</div>
@@ -63,7 +63,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Teachers on Leave</div>
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Today on Leave</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $leave }}</div>
               </div>
               <div class="col-auto">
@@ -79,7 +79,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Teachers absent</div>
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Today absent</div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $absent }}</div>
               </div>
               <div class="col-auto">
@@ -90,61 +90,61 @@
         </div>
       </div>
     </div>
-
-  
-      <div class="row">
-      <div class="col-xl-12 col-lg-12">
-      <div class="card shadow   mb-4">
-          <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Upload Attendance</h6>
-              <input type="hidden" name="p_fld" id="p_fld" value="{{ $p }}" >
-                  <input type="hidden" name="a_fld" id="a_fld" value="{{ $absent }}" >
-                  <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
-                  <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
-          </div>
-          <div class="card-body">
-          {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
-          @csrf
-          <input type="file" name="import_file" />
-              <button type="submit"  class="btn btn-primary">
-                            <span class="icon text-white-100">
-                                <i class="fas fa-upload"></i>
-                            </span>
-                            <span class="text ">Upload</span>
-                        </button> 
-                        
-              {!! Form::close() !!}
-          </div>
-      </div>  
-      </div> 
-    </div>
+ 
     <!-- Content Row -->
 
     <div class="row">
 
       <!-- Area Chart -->
-      <div class="col-xl-8 col-lg-7">
+      <div class="col-xl-6 col-lg-6">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Overview</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Upload Attendance</h6>
             
           </div>
           <!-- Card Body -->
           <div class="card-body">
             <div class="chart-area">
-              <canvas id="myAreaChart"></canvas>
+                {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
+                @csrf
+                <input type="file" name="import_file" />
+                    <button type="submit"  class="btn btn-primary">
+                                  <span class="icon text-white-100">
+                                      <i class="fas fa-upload"></i>
+                                  </span>
+                                  <span class="text ">Upload</span>
+                              </button> 
+                              
+                    {!! Form::close() !!}
+                    
+              <input type="hidden" name="p_fld" id="p_fld" value="{{ $p }}" >
+              <input type="hidden" name="a_fld" id="a_fld" value="{{ $absent }}" >
+              <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
+              <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
+
+     
+                  <div class="h-100 py-4">
+                            
+                    <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary"> 
+                          
+                      <h4>    <i class="fa fa-calendar h-100 py-4"></i> <i id="todate"></i> </h4>
+                          
+                        <h4>    <i class="fa fa-clock h-100 py-4"></i> <i id="clock"></i> </h4>
+                          </span>
+                  </div>
+         
             </div>
           </div>
         </div>
       </div>
 
       <!-- Pie Chart -->
-      <div class="col-xl-4 col-lg-5">
+      <div class="col-xl-6 col-lg-6">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Teachers Status</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Attendance Status</h6>
             
           </div>
           <!-- Card Body -->

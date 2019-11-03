@@ -38,7 +38,7 @@ class AttendanceController extends Controller
                         $results = $reader->setHeaderRow(5);
                         return $results;  
                 })->get(); 
-           
+                $arr = [];
             if($data->count()){
                
                 foreach ($data as $key => $value) { 

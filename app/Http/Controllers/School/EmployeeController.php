@@ -43,7 +43,7 @@ class EmployeeController extends Controller
        {
             $class      = 'failed'; 
             $msg      = 'Teacher with this Biometric code is already available!';  
-            return Redirect::back()->withErrors('success1', 'Teacher with this Biometric code is already available!')->withInput();
+            return Redirect::back()->with('class', $class)->with('msg', $msg)->withInput();
        }
        else
        {
