@@ -1,14 +1,13 @@
- 
+/* Source: http://tutorialzine.com/2013/06/digital-clock/ */
 
 /*-------------------------
-	The clocks
+	Simple reset
 --------------------------*/
-
-
+ 
 #clock{
-	width:370px;
+	width:470px;
 	padding:40px;
-	margin:70px auto 60px;
+	margin:20px auto 60px;
 	position:relative;
 }
 
@@ -30,44 +29,10 @@
 	padding: 40px 20px 20px;
 	border-radius:6px;
 	position:relative;
-	height: 54px;
+	height: 134px;
 }
 
-
-/*-------------------------
-	Light color theme
---------------------------*/
-
-
-#clock.light{
-	background-color:#272e38;;
-	color:#cacaca;
-}
-
-#clock.light:after{
-	box-shadow:0 4px 10px rgba(14, 1, 1, 0.15);
-}
-
-#clock.light .digits div span{
-	background-color:#272e38;
-	border-color:#272e38;	
-}
-
-#clock.light .digits div.dots:before,
-#clock.light .digits div.dots:after{
-	background-color:#272e38;
-}
-
-#clock.light .alarm{
-	background:url('../img/alarm_light.jpg');
-}
-
-#clock.light .display{
-	background-color:#dddddd;
-	box-shadow:0 1px 1px rgba(0,0,0,0.08) inset, 0 1px 1px #fafafa;
-}
-
-
+ 
 /*-------------------------
 	Dark color theme
 --------------------------*/
@@ -293,7 +258,7 @@
 #clock .alarm{
 	width:16px;
 	height:16px;
-	bottom:20px;
+	bottom:30px;
 	background:url('../img/alarm_light.jpg');
 	position:absolute;
 	opacity:0.2;
@@ -336,9 +301,18 @@
 
 #clock .ampm{
 	position:absolute;
-	bottom:20px;
+	bottom:30px;
 	right:20px;
 	font-size:12px;
+}
+
+ 
+#clock .todate{
+	position:relative;
+	top:20px; 
+	font-size:12px;
+	text-align:center;
+
 }
 
  

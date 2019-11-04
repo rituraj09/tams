@@ -96,7 +96,7 @@
     <div class="row">
 
       <!-- Area Chart -->
-      <div class="col-xl-6 col-lg-6">
+      <div class="col-xl-8 col-lg-8">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -124,15 +124,21 @@
               <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
 
      
-                  <div class="h-100 py-4">
-                            
-                    <span class="mr-2 d-none d-lg-inline font-weight-bold text-primary"> 
-                          
-                      <h4>    <i class="fa fa-calendar h-100 py-4"></i> <i id="todate"></i> </h4>
-                          
-                        <h4>    <i class="fa fa-clock h-100 py-4"></i> <i id="clock"></i> </h4>
-                          </span>
-                  </div>
+                    <div class="h-100 py-4">   
+                      <div id="clock" class="dark">
+                        <div class="display">
+                          <div class="weekdays"></div>
+                          <div class="ampm"></div>
+                          <div class="alarm"></div>
+                          <div class="digits" > </div>
+                          <div class="todate">
+                            <center> 
+                              <span id="todate" style="font-family: 'Orbitron', sans-serif; text-align:center;"></span>       
+                            </center>
+                            </div>
+                        </div>
+                      </div>  
+                    </div>
          
             </div>
           </div>
@@ -140,7 +146,7 @@
       </div>
 
       <!-- Pie Chart -->
-      <div class="col-xl-6 col-lg-6">
+      <div class="col-xl-4 col-lg-4">
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -219,21 +225,27 @@
                       <td>
                    
                         @if( $v->attendance_type == "2")
-                        <center> <i class="fa fa-flag text-danger" title="Absent"></i></center>
+                        <center> <i class="fa fa-flag text-danger"  data-toggle="tooltip" data-placement="top"  title="Absent"></i></center>
                         @elseif( $v->attendance_type == "3")
-                        <center> <i class="fa fa-flag text-info" title="On Leave"></i></center>
+                        <center> <i class="fa fa-flag text-info" data-toggle="tooltip" data-placement="top"  title="On Leave"></i></center>
                         @else 
                           {{ date('H:i:s', strtotime($v->in_time )) }}
                         @endif 
                       </td>
                       <td>
                       @if(($v->upload_status=='0' && empty($v->out_time)) && $v->attendance_type == "1") 
-                      <center><span class="blinking"><i class="fa fa-play-circle text-success"></i></span></center>
+                      <center> 
+                        <i id="hhrs"></i>
+                        <span class="blinking palybtn"  data-toggle="tooltip" data-placement="top"  title="Shift Running!"><i class=" fa fa-play-circle text-success"></i></span>
+                        <span class="over blinking" data-toggle="tooltip" data-placement="top"  title="Shift Over, Please Upload the attendance!"> 
+                          <i class="fas fa-upload text-danger"></i>
+                      </span> 
+                      </center>
                       @elseif( empty($v->out_time)  && ($v->attendance_type == "2" || $v->attendance_type == "3"))
                         @if( $v->attendance_type == "2")
-                        <center><i class="fa fa-flag text-danger" title="Absent"></i></center>
+                        <center><i class="fa fa-flag text-danger"  data-toggle="tooltip" data-placement="top"  title="Absent"></i></center>
                         @elseif( $v->attendance_type == "3")
-                        <center><i class="fa fa-flag text-info" title="On Leave"></i></center>
+                        <center><i class="fa fa-flag text-info"  data-toggle="tooltip" data-placement="top"  title="On Leave"></i></center>
                         @endif 
                       @elseif(( $v->upload_status == '1' && empty($v->out_time)) && $v->attendance_type == "4") 
                       <center><i class="fa fa-battery-quarter text-warning"  data-toggle="tooltip" data-placement="top"  title="Remarks: {{$v->remarks}}"></i></center>
@@ -243,11 +255,11 @@
                       </td>
                       <td>
                        @if( $v->attendance_type == "1")
-                       <i class="text-success" title="On Leave">Present</i>
+                       <i class="text-success"  data-toggle="tooltip" data-placement="top"  title="Present">Present</i>
                        @elseif( $v->attendance_type == "2")
-                       <i class="text-danger" title="On Leave">Absent</i>
+                       <i class="text-danger"  data-toggle="tooltip" data-placement="top"  title="Absent">Absent</i>
                        @elseif( $v->attendance_type == "3")
-                       <i class="text-info" title="On Leave">On Leave</i>
+                       <i class="text-info"  data-toggle="tooltip" data-placement="top"  title="On Leave">On Leave</i>
                        @else 
                        <i class="text-warning" data-toggle="tooltip" data-placement="top"  title="Remarks: {{$v->remarks}}">MIS</i>
                        @endif

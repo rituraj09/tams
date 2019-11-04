@@ -6,7 +6,7 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
-  type: 'doughnut',
+  type: 'pie',
   data: {
     labels: ["Present", "Absent", "On Leave"],
     datasets: [{
