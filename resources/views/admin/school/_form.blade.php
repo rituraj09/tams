@@ -16,6 +16,15 @@
         {!! $errors->first('code', '<span class="text-danger">:message</span>') !!}
     </div>
 </div>
+<div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
+    <div class="row">
+        {!! Form::label('phone', 'Phone No. :', array('class' => 'col-md-2 control-label')) !!}
+        <div class="col-md-5">
+            {!! Form::text('phone', null, ['class' => 'form-control', 'id' => 'phone', 'placeholder' => ' ', 'autocomplete' => 'off', 'required' => 'true']) !!}
+        </div>
+        {!! $errors->first('phone', '<span class="text-danger">:message</span>') !!}
+    </div>
+</div>
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
     <div class="row">
         {!! Form::label('email', 'Email :', array('class' => 'col-md-2 control-label')) !!}

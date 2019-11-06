@@ -10,8 +10,8 @@
   <title>TAMS | Admin</title>
 
   <!-- Custom fonts for this template-->
-    <link href="{{ asset('assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
- 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -20,6 +20,9 @@
   <!-- Custom styles for this page -->
     <link href="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css"> 
     <link href="{{ asset('assets/css/addon.css')}}" rel="stylesheet" type="text/css"> 
+   
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
     <style>
    .blinking {
   animation: blinker 1s linear infinite;
@@ -30,6 +33,8 @@
     opacity: 0;
   }
 }
+
+
 </style>
  
 </head>
@@ -110,7 +115,6 @@
 
   @include('admin.json.script')
   <!-- Bootstrap core JavaScript-->
-  
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script> 
 <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>  
 
@@ -134,6 +138,7 @@
 
   <!-- Page level custom scripts -->
 <script src="{{ asset('assets/js/demo/datatables-demo.js')}}"></script>  
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 </body>
 
 </html>

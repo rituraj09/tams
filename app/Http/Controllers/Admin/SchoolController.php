@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Cache;
 
 use DB, Validator, Redirect, Auth, Crypt, Hash;
 class SchoolController extends Controller
-{
+{ 
+
     public function createSchool() { 
         $activemenu = 'a';
         $activelink='a1'; 
@@ -45,4 +46,97 @@ class SchoolController extends Controller
             return Redirect::route('admin.school.create')->with('class', $class)->with('msg', $msg);    
         }  
     }
+    public function view_schools() {  
+        $results = School::whereStatus(1)->orderBy('name', 'ASC')->get();  
+        $activemenu = 'a';
+        $activelink='a2'; 
+        return view('admin.school.view_schools', compact('results','activelink','activemenu')); 
+    }
+       
+    public function edit($id) {
+        $activemenu = 'a';
+        $activelink='a2';
+        $id         = Crypt::decrypt($id);
+        $school    = School::find($id); 
+         
+        return view('admin.school.edit', compact('school','activelink','activemenu','id'));
+    }
+    public function update(Request $request, $id) {
+        $msg    = $class = '';
+        $data = $request->all();  
+        $id     = Crypt::decrypt($id); 
+        DB::beginTransaction();
+        $validator = Validator::make($data, School::$rulesedit); 
+        if ($validator->fails())
+        {
+             return Redirect::back()->withErrors($validator)->withInput();  
+        } 
+        else
+        {  
+            $cnt = School::whereStatus(1)->where('email', $data['email'])->where('id','<>',$id)->count();  
+            if($cnt > 0)
+            {
+      
+                $class      = 'failed'; 
+                $msg      = 'Email id is already available!';  
+                return Redirect::back()->with('class', $class)->with('msg', $msg)->withInput();
+            }
+            else{
+                $School = School::find($id);  
+                $School->fill($data);  
+                $School->save();   
+                if($School) {
+                    $class      = 'success'; 
+                    $msg      = $data['name'].' has been updated successfully.';          
+                }
+                else
+                {
+                    $class      = 'failed'; 
+                    $msg      = 'Unable to updated School!'; 
+                }
+            }
+            DB::commit();    
+            return Redirect::route('admin.school.view')->with('class', $class)->with('msg', $msg);    
+        }  
+    }
+    public function password($id) {
+        $activemenu = 'a';
+        $activelink='a2';
+        $id         = Crypt::decrypt($id);
+        $school    = School::find($id); 
+         
+        return view('admin.school.password', compact('school','activelink','activemenu','id'));
+    }
+    public function update_password(Request $request, $id) {
+        $msg    = $class = '';
+        $data = $request->all();  
+        $id     = Crypt::decrypt($id); 
+        $validator = Validator::make($data, School::$rulespassword); 
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();  
+        } 
+        else
+        { 
+            DB::beginTransaction(); 
+            $School = School::find($id);                  
+            $data['password'] = bcrypt($data['password']); 
+            $School->fill($data);  
+            $School->save();   
+            if($School) {
+                $class      = 'success'; 
+                $msg      = 'password has been updated successfully.';          
+            }
+            else
+            {
+                $class      = 'failed'; 
+                $msg      = 'Unable to updated password!'; 
+            }    
+            DB::commit();    
+            return Redirect::route('admin.school.view')->with('class', $class)->with('msg', $msg);  
+            
+        } 
+            
+    }
+    
 }

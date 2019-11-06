@@ -26,6 +26,7 @@
   Master
 </div>
 
+
 <!-- Nav Item - Pages Collapse Menu -->
 <li class="nav-item {{ $activemenu =="a" ? 'active' : '' }}">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -36,11 +37,13 @@
     <div class="bg-white py-2 collapse-inner rounded">
       <h6 class="collapse-header">Custom Schools:</h6>
       <a class="collapse-item {{ $activelink =="a1" ? 'active' : '' }}" href="{{ route('admin.school.create') }}">Add Schools</a>
-      <a class="collapse-item {{ $activelink =="a2" ? 'active' : '' }}" href="cards.html">View Schools</a>
+      <a class="collapse-item {{ $activelink =="a2" ? 'active' : '' }}" href="{{ route('admin.school.view') }}">View Schools</a>
     </div>
   </div>
 </li>
 
+
+@if(Auth::user()->id !=1)
 <!-- Nav Item - Utilities Collapse Menu -->
 <li class="nav-item">
   <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -71,9 +74,13 @@
     
     </div>
   </div>
+</li> 
+@endif
+<li class="nav-item  {{ $activelink =="02" ? 'active' : '' }} " >
+  <a class="nav-link " href="#">
+    <i class="fas fa-fw fa-table"></i>
+    <span>Reports</span></a>
 </li>
-
-
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">
 

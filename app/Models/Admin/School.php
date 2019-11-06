@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class School extends Model
 {
     protected $fillable = array(
-		'name', 'code', 'state', 'district', 'email', 
+		'name', 'code', 'state', 'district', 'email', 'phone',
 		'password' 
 
     );
@@ -18,7 +18,18 @@ class School extends Model
         'code' => 'required|unique:schools',
         'state' => 'required',
         'district' => 'required',
+        'phone' => 'required|numeric',
         'email' => 'required|email|max:255|unique:schools',
+        'password' => 'required|min:6|confirmed',
+        'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'min:6'
+    ];
+    public static $rulesedit 	= [
+        'name' => 'required|max:255', 
+        'phone' => 'required|numeric', 
+    ];
+    
+    public static $rulespassword 	= [ 
         'password' => 'required|min:6|confirmed',
         'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'min:6'

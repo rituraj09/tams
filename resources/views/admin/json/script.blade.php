@@ -1,6 +1,20 @@
 <script>  
-   
-     
+   function confirmChange() {
+    var result = confirm('Are you sure, you want to Update?'); 
+    if (result) {
+            return true;
+        } else {
+            return false;
+    }
+}
+function confirmSubmit() {
+    var result = confirm('Are you sure, you want to Save?'); 
+    if (result) {
+            return true;
+        } else {
+            return false;
+    }
+}  
 function onload()
 { 
   getpie();
