@@ -63,15 +63,15 @@ $(function(){
         // hh is for the hours in 12-hour format,
         // mm - minutes, ss-seconds (all with leading zeroes),
         // d is for day of week and A is for AM/PM
+        var  dnow = gettime();
+         var now = moment().format("hhmmssdA");
 
-        var now = moment().format("hhmmssdA");
-
-        digits.h1.attr('class', digit_to_name[now[0]]);
-        digits.h2.attr('class', digit_to_name[now[1]]);
-        digits.m1.attr('class', digit_to_name[now[2]]);
-        digits.m2.attr('class', digit_to_name[now[3]]);
-        digits.s1.attr('class', digit_to_name[now[4]]);
-        digits.s2.attr('class', digit_to_name[now[5]]);
+        digits.h1.attr('class', digit_to_name[dnow[0]]);
+        digits.h2.attr('class', digit_to_name[dnow[1]]);
+        digits.m1.attr('class', digit_to_name[dnow[2]]);
+        digits.m2.attr('class', digit_to_name[dnow[3]]);
+        digits.s1.attr('class', digit_to_name[dnow[4]]);
+        digits.s2.attr('class', digit_to_name[dnow[5]]);
 
         // The library returns Sunday as the first day of the week.
         // Stupid, I know. Lets shift all the days one position down, 
@@ -93,7 +93,8 @@ $(function(){
         ampm.text(now[7]+now[8]);
 
         // Schedule this function to be run again in 1 sec
-        setTimeout(update_time, 1000);
+      //  setTimeout(update_time, 1000);
+        setTimeout(update_time, 500); 
 
     })();
 

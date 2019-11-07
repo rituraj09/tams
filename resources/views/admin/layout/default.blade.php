@@ -24,6 +24,16 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <style>
+    .btn-group-xs > .btn, .btn-xs {
+  padding: .60rem .8rem;
+  font-size: 11px;
+  line-height: .5;
+  border-radius: .2rem;
+}
+.table
+{
+  font-size:13px !important;
+}
    .blinking {
   animation: blinker 1s linear infinite;
 }
@@ -69,9 +79,12 @@
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; DITEC, Govt. of Assam 2019</span>
+        <div class="container">
+         
+          <div class="copyright text-center ">
+            <span>Designed & developed by:
+            Directorate of Information Technology, Electronics & Communication (DITEC)
+            </span>
           </div>
         </div>
       </footer>

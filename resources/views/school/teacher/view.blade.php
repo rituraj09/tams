@@ -15,35 +15,38 @@
             @include('include.message')             
                 <div class="row">
                     <div class="col-md-12">     
-                        <div class="table-responsive">               
-                        <table class="table  table-bordered"  cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th width="8%"> Sl No</th>
-                            <th width="15%">Biometric Code</th> 
-                            <th >Full Name</th>
-                            <th >Mobile Number</th>
-                            <th >Employee type</th> 
-                            <th  width="10%">Transactions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($results as $k => $v)
+                        <div class="table-responsive">    
+                        <table class="table  table-bordered"  id="dataTable" cellspacing="0">
+                            <thead>
                             <tr>
-                                <td><a href="#">{{ $k+1 }}</a></td>
-                                <td><a href="#">{{ $v->unique_id  }}</a></td>
-                                <td>  {{ $v->first_name }} {{ $v->last_name }} </td> 
-                                <td>{{ $v->phone }}</td>
-                                <td> {{ $v->employee_types->name }}</td>
-                                
-                                                         
-                                <td>
-                                    <a href="#" class="btn btn-primary btn-sm">View</a>
-                                </td>
+                                <th width="8%"> Sl No</th>
+                                <th width="10%">Biometric Code</th> 
+                                <th >Full Name</th>
+                                <th >Mobile Number</th>
+                                <th >Employee type</th> 
+                                <th >Retirement Date</th> 
+                                <th  >Transactions</th>
                             </tr>
-                            @endforeach
-                        </tbody>
-                        </table>
+                            </thead>
+                            <tbody>
+                                @foreach($results as $k => $v)
+                                <tr>
+                                    <td> {{ $k+1 }} </td>
+                                    <td> {{ $v->unique_id  }} </td>
+                                    <td>  {{ $v->first_name }} {{ $v->last_name }} </td> 
+                                    <td>{{ $v->phone }}</td>
+                                    <td> {{ $v->employee_types->name }}</td>
+                                    <td>
+                                    {{  date('d-M-Y', strtotime($v->dor)) }}
+                                        </td>                    
+                                    <td>
+                                        <a href="#" onclick="getdetails({{ $v->id}})"  data-toggle="modal" data-target="#viewModal" class="btn btn-primary btn-xs">View</a>
+                                        <a href="{{ route('school.teacher.edit', Crypt::encrypt($v->id)) }}" class="btn btn-info btn-xs">Edit</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>  
                         </div>
                     </div>
 

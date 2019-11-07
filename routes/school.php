@@ -35,4 +35,15 @@ Route::group(['prefix'=>'teacher'], function() {
         'middleware' => ['school'],
         'uses' => 'School\AttendanceController@savedata'
     ]);  
+
+    Route::get('/edit/{id}', [
+        'as' => 'teacher.edit',
+        'middleware' => ['school'],
+        'uses' => 'School\EmployeeController@edit'
+    ]); 
+    Route::post('/update/{id}', [
+        'as' => 'teacher.update',
+        'middleware' => ['school'],
+        'uses' => 'School\EmployeeController@update'
+    ]);
 });

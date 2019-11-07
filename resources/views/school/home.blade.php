@@ -106,7 +106,7 @@
           <!-- Card Body -->
           <div class="card-body">
             <div class="chart-area">
-                {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
+                {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'files' => true ,  'method' => 'post' )) !!}
                 @csrf
                 <input type="file" name="import_file" />
                     <button type="submit"  class="btn btn-primary">
@@ -123,7 +123,7 @@
               <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
               <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
 
-     
+            
                     <div class="h-100 py-4">   
                       <div id="clock" class="dark">
                         <div class="display">

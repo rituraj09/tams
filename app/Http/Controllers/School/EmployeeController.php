@@ -70,5 +70,62 @@ class EmployeeController extends Controller
         $activelink='a2'; 
         return view('school.teacher.view', compact('results','activelink','activemenu')); 
     }
+    
+    public function edit($id) { 
+        $activemenu = 'a';
+        $activelink='a2';     
+        $id         = Crypt::decrypt($id);
+        $teacher    = Employee::find($id); 
+        $empType  = Helper::empType($list = true); 
+         
+        return view('school.teacher.edit', compact('teacher','empType','activelink','activemenu','id')); 
+    }
+    public function update(Request $request, $id) {
+        $msg    = $class = '';
+        $data = $request->all(); 
+        $id     = Crypt::decrypt($id); 
+        $data['school_id']=  Auth::user()->id; 
+        $data['dor'] =  date('Y-m-d', strtotime($data['dor'])); 
+        if( $data['dob'])
+        {
+            $data['dob'] =  date('Y-m-d', strtotime($data['dob'])); 
+        }
+        if( $data['doj'])
+        {
+            $data['doj'] =  date('Y-m-d', strtotime($data['doj'])); 
+        } 
+        $validator = Validator::make($data, Employee::$rulesedit);         
+        if ($validator->fails())
+        {
+             return Redirect::back()->withErrors($validator)->withInput();  
+        }  
+        $cnt = Employee::whereStatus(1)->where('school_id', $data['school_id'])->where('unique_id', $data['unique_id'])->where('id','<>', $id)->count(); 
+    
+        if($cnt > 0)
+        {
+                $class      = 'failed'; 
+                $msg      = 'Teacher with this Biometric code is already available!';  
+                return Redirect::back()->with('class', $class)->with('msg', $msg)->withInput();
+        }
+       else
+       {
+            DB::beginTransaction();
+            $employee = Employee::find($id);  
+                $employee->fill($data);  
+                $employee->save();   
+                if($employee) {
+                    $class      = 'success'; 
+                    $msg      = $data['first_name'].' '.$data['last_name'].' has been updated successfully.';          
+                }                     
+                
+                else
+                {
+                    $class      = 'failed'; 
+                    $msg      = 'Unable to register School!'; 
+                }
+            DB::commit();    
+            return Redirect::route('school.teacher.view')->with('class', $class)->with('msg', $msg);    
+        }
+    }
   
 }

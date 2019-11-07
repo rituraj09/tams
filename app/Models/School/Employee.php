@@ -22,6 +22,15 @@ class Employee extends Model
         'dor' 				        => 'required|date',   
         'employee_type' 			=> 'required|numeric'    
     ]; 
+    public static $rulesedit 	= [ 
+        
+        'first_name' 				=> 'required|max:100',  
+        'last_name' 				=> 'required|max:100',     
+        'unique_id'                 => 'required',
+        'phone' 				    => 'required|max:15',    
+        'dor' 				        => 'required|date',   
+        'employee_type' 			=> 'required|numeric'    
+    ];
     public $messsages = array(
         'unique_id.unique_with'          =>  'this biometric code is already available',
 	);

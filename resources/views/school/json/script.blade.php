@@ -1,12 +1,123 @@
-<script>  
-   
-     
+<div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body"> 
+        <div id="loader">
+        <center>
+        <img src="{{ asset('assets/img/loader.gif')}}">
+        </center>
+        </div>
+        <div id="listdata">
+        <div class="form-group">
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Biometric Code:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_code" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Name:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="fname" class="text-primary"></i> 
+                <i id="lname" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Email:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_email" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Mobile:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_mobile" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Address:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_add" class="text-primary"></i><br>
+                <i id="l_pin" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Employee Type:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_type" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Date of Birth:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_dob" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Joining  Date:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_doj" class="text-primary"></i>
+               </label>   
+            </div>
+            <div class="row"> 
+               <label class="col-md-4 control-label">
+               Retirement Date:
+               </label>  
+                <label class="control-label col-md-5"> 
+                <i id="l_dor" class="text-primary"></i>
+               </label>   
+            </div>
+        </div> 
+        </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+<script>      
 function onload()
-{
-  startTime();
-  getpie();
-}
+{ 
  
+  startTime();
+  getpie();   
+}  
+   function confirmChange() {
+    var result = confirm('Are you sure, you want to Update?'); 
+    if (result) {
+            return true;
+        } else {
+            return false;
+    }
+}
+function confirmSubmit() {
+    var result = confirm('Are you sure, you want to Save?'); 
+    if (result) {
+            return true;
+        } else {
+            return false;
+    }
+}  
 var isShift = false;
 var seperator = "-";
 function DateFormat(txt, keyCode) {
@@ -105,7 +216,55 @@ var myPieChart = new Chart(ctx, {
 });
 }
 
-
- 
+function getdetails(id)  {  
+    
+    $("#loader").show(); 
+    $("#listdata").hide();  
+    url = data = ''; 
+    data = '&id='+id; 
+    url  = "{{ route('get_employee_info') }}"; 
+    $.ajax({ 
+        data : data,
+        url  : url,
+        type : 'get', 
+        success:function(data) {     
+            
+            $("#l_code").html(data.unique_id); 
+            $("#fname").html(data.first_name); 
+            $("#lname").html(data.last_name); 
+            $("#l_email").html(data.email); 
+            $("#l_mobile").html(data.phone); 
+            $("#l_add").html(data.address); 
+            $("#l_pin").html(data.pincode); 
+            $("#l_type").html(data.emp_type); 
+            $("#l_dob").html(getDateFormat(data.dob)); 
+            $("#l_doj").html(getDateFormat(data.doj)); 
+            $("#l_dor").html(getDateFormat(data.dor)); 
+            $("#loader").hide(); 
+            $("#listdata").show();  
+        },
+        error:function(data){ 
+        }
+    }); 
+}
+function getDateFormat(date)
+{
+    if(date){
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; 
+        var date = new Date(date);
+        var dd = date.getDate(); 
+        var mm =months[date.getMonth()]; 
+        var yyyy = date.getFullYear(); 
+        var output = (dd<10 ? '0' : '') + dd + "-" 
+                        +  mm+ '-' + yyyy; 
+        return output;
+    }
+    else
+    {
+        return "";
+    }
+   
+}
 </script>
+
 

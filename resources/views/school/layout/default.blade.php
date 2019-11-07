@@ -1,4 +1,4 @@
-<!DOCTYPE >
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -27,6 +27,16 @@
 
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
  <style>
+ .btn-group-xs > .btn, .btn-xs {
+  padding: .60rem .8rem;
+  font-size: 11px;
+  line-height: .5;
+  border-radius: .2rem;
+}
+.table
+{
+  font-size:13px !important;
+}
    .blinking {
   animation: blinker 1s linear infinite;
 }
@@ -69,9 +79,12 @@
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; DITEC, Govt. of Assam 2019</span>
+        <div class="container">
+          
+          <div class="copyright text-center ">
+            <span>Designed & developed by:
+            Directorate of Information Technology, Electronics & Communication (DITEC)
+            </span>
           </div>
         </div>
       </footer>
@@ -114,6 +127,8 @@
   </div> 
   <!-- Bootstrap core JavaScript-->
   
+
+  
   @include('school.json.script') 
 
 <script src="{{ asset('assets/vendor/jquery/jquery.min.js')}}"></script> 
@@ -146,7 +161,8 @@
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
-function startTime() {
+ function startTime() {
+  var st = srvTime(); 
   var today = new Date();
   var dd = today.getDate();
   var mnth = today.getMonth() + 1;
@@ -156,10 +172,11 @@ function startTime() {
   var Y = today.getFullYear();   
   var todates = dd + '-' + mm + '-' + Y;
   document.getElementById('todate').innerHTML = todates; 
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();   
-   
+  var h = checkTime(today.getHours()); 
+  var m = checkTime(today.getMinutes());
+  var s = checkTime(today.getSeconds());   
+
+  
   if(h>=14 )
   {
     $(".palybtn").hide();
@@ -171,11 +188,56 @@ function startTime() {
     $(".palybtn").show();
   }
   var t = setTimeout(startTime, 500);
-}
+} 
+
 function checkTime(i) {
   if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
   return i;
+} 
+
+
+var xmlHttp;
+function srvTime(){
+    try {
+        //FF, Opera, Safari, Chrome
+        xmlHttp = new XMLHttpRequest();
+    }
+    catch (err1) {
+        //IE
+        try {
+            xmlHttp = new ActiveXObject('Msxml2.XMLHTTP');
+        }
+        catch (err2) {
+            try {
+                xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            catch (eerr3) {
+                //AJAX not supported, use CPU time.
+                alert("AJAX not supported");
+            }
+        }
+    }
+    xmlHttp.open('HEAD',window.location.href.toString(),false);
+    xmlHttp.setRequestHeader("Content-Type", "text/html");
+    xmlHttp.send('');
+    return xmlHttp.getResponseHeader("Date");
 }
+function gettime() {
+  var st = srvTime(); 
+  var today = new Date(st);  
+  var dd = ("0" + today.getDate()).slice(-2);
+  var mm= ("0" + (today.getMonth() + 1)).slice(-2)
+  var Y = today.getFullYear();    
+  var h = checkTime(today.getHours());  
+  var midday = "AM";
+  midday = (h >= 12) ? "PM" : "AM"; /* assigning AM/PM */
+  hrs = (h == 0) ? 12 : ((h > 12) ? (h - 12): h); /* assigning hour in 12-hour format */ 
+  var h = checkTime(hrs);
+  var m = checkTime(today.getMinutes());
+  var s = checkTime(today.getSeconds());   
+  var clck = h+m+s+dd+midday; 
+  return clck;
+} 
 </script>
 </body>
 

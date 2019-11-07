@@ -9,7 +9,7 @@
           </div>
           <div class="card-body">
           @include('include.message')  
-          {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',  'onsubmit' => 'return confirmSubmit()', 'files' => true ,  'method' => 'post' )) !!}
+          {!! Form::open(array('route' => 'school.attendance.import', 'id' => 'school.attendance.import', 'class' => 'form-horizontal bucket-form',   'files' => true ,  'method' => 'post' )) !!}
           @csrf
           <input type="file" name="import_file" />
               <button type="submit"  class="btn btn-primary">

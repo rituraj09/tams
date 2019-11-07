@@ -32,53 +32,67 @@ class AttendanceController extends Controller
         $activemenu = '02';
         $activelink='02'; 
         if($request->hasFile('import_file')){
-            $path = $request->file('import_file')->getRealPath();              
-            
+            try{
+                $path = $request->file('import_file')->getRealPath();          
                 $data = Excel::load($path, function($reader) {      
                         $results = $reader->setHeaderRow(5);
                         return $results;  
                 })->get(); 
                 $arr = [];
+            }
+            catch (\Exception $e) {
+                report($e); 
+                $class      = 'failed'; 
+                $msg      = 'Excel Format not matching!'; 
+                return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);       
+      
+            }
             if($data->count()){
-               
-                foreach ($data as $key => $value) { 
-                    if(!$value->emp_code)
-                    {
-                        break;
-                    } 
-                    $arr[] = $value->all(); 
-                }  
-                $results = $arr;
-                $dateval = Excel::load($path, function($reader) {     
-                    $results =  $reader->skipRows(2)->takeRows(1)->get();        
-                    $results = $reader->skipColumns(1)->takeColumns(2)->get();
-                     return $results;
-                 })->get();
-                 $dtt = date('Y-m-d', strtotime($dateval[0][0]));  
-                $date =    date('d-m-Y', strtotime($dateval[0][0]));   
-                
-                $shift_start = $results[0]['shift_start']->format('H:i:s');  
-                $shift_end = $results[0]['shift_end']->format('H:i:s');      
-                $school_id=  Auth::user()->id; 
-                $attndc = Attendance::whereStatus(1)->where('school_id', $school_id )->where('date',  $dtt )->first();
-         
-                if(!empty($attndc))
-                {   
-                        if($attndc->upload_status  == 0)
+               try{
+                    foreach ($data as $key => $value) { 
+                        if(!$value->emp_code)
                         {
-                           
-                            return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
-                        }
-                        else
-                        { 
-                            $class      = 'failed'; 
-                            $msg      = 'Upload of attendance for '.$date.' has been closed.';   
-                            return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);   
-                        }
+                            break;
+                        } 
+                        $arr[] = $value->all(); 
+                    }  
+                    $results = $arr;
+                    $dateval = Excel::load($path, function($reader) {     
+                        $results =  $reader->skipRows(2)->takeRows(1)->get();        
+                        $results = $reader->skipColumns(1)->takeColumns(2)->get();
+                        return $results;
+                    })->get();
+                    $dtt = date('Y-m-d', strtotime($dateval[0][0]));  
+                    $date =    date('d-m-Y', strtotime($dateval[0][0]));   
+                    
+                    $shift_start = $results[0]['shift_start']->format('H:i:s');  
+                    $shift_end = $results[0]['shift_end']->format('H:i:s');      
+                    $school_id=  Auth::user()->id; 
+                    $attndc = Attendance::whereStatus(1)->where('school_id', $school_id )->where('date',  $dtt )->first();
+                 
+                    if(!empty($attndc))
+                    {   
+                            if($attndc->upload_status  == 0)
+                            { 
+                                return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                            }
+                            else
+                            { 
+                                $class      = 'failed'; 
+                                $msg      = 'Upload of attendance for '.$date.' has been closed.';   
+                                return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);   
+                            }
+                    }
+                    else
+                    {
+                        return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                    }
                 }
-                else
-                {
-                    return view('school.attendance.attendance_view', compact('results','activemenu','activelink','school_id','date','shift_start','shift_end'));
+                catch (\Exception $e) {
+                    report($e);
+                    $class      = 'failed'; 
+                    $msg      = 'Excel Format not matching!'; 
+                    return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);       
                 }
             } 
         } 

@@ -90,7 +90,8 @@
     <footer class="sticky-footer ">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span class="text-gray-900">Copyright &copy; DITEC, Govt. of Assam 2019</span>
+            <span class="text-gray-100">Designed & developed by:
+            Directorate of Information Technology, Electronics & Communication (DITEC)</span>
           </div>
         </div>
       </footer>

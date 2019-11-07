@@ -93,12 +93,15 @@
                 </div>
             </div>
             <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; DITEC, Govt. of Assam 2019</span>
-                </div>
-                </div>
-            </footer>
+        <div class="container">
+         
+          <div class="copyright text-center ">
+            <span>Designed & developed by:
+            Directorate of Information Technology, Electronics & Communication (DITEC)
+            </span>
+          </div>
+        </div>
+      </footer>
         </div>
     </div>
   <!-- Bootstrap core JavaScript-->
