@@ -40,6 +40,11 @@ Route::group(['prefix'=>'school'], function() {
         'middleware' => ['admin'],
         'uses' => 'Admin\SchoolController@update_password'
     ]);
+    Route::post('/delete/{id}', [
+        'as' => 'school.delete',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\SchoolController@delete'
+    ]);
 });
  
 

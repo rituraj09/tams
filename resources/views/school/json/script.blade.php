@@ -118,6 +118,14 @@ function confirmSubmit() {
             return false;
     }
 }  
+function confirmDelete() {
+    var result = confirm('Are you sure, you want to Delete?'); 
+    if (result) {
+            return true;
+        } else {
+            return false;
+    }
+}  
 var isShift = false;
 var seperator = "-";
 function DateFormat(txt, keyCode) {
@@ -264,7 +272,7 @@ function getDateFormat(date)
         return "";
     }
    
-}
+} 
 </script>
 
 

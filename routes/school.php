@@ -45,5 +45,10 @@ Route::group(['prefix'=>'teacher'], function() {
         'as' => 'teacher.update',
         'middleware' => ['school'],
         'uses' => 'School\EmployeeController@update'
+    ]); 
+    Route::post('/delete/{id}', [
+        'as' => 'teacher.delete',
+        'middleware' => ['school'],
+        'uses' => 'School\EmployeeController@delete'
     ]);
 });

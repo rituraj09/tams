@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\School;
+use App\Models\School\Employee; 
+use App\Models\School\Attendance;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
@@ -132,6 +134,38 @@ class SchoolController extends Controller
                 $class      = 'failed'; 
                 $msg      = 'Unable to updated password!'; 
             }    
+            DB::commit();    
+            return Redirect::route('admin.school.view')->with('class', $class)->with('msg', $msg);  
+            
+        } 
+            
+    }
+    public function delete($id) {
+        $msg    = $class = ''; 
+        $id     = Crypt::decrypt($id);  
+        $cnt = Employee::whereStatus(1)->where('school_id',  $id )->count();  
+        if($cnt > 0)
+        {
+            $class      = 'failed'; 
+            $msg      = 'You cannot delete this School!';  
+            return Redirect::back()->with('class', $class)->with('msg', $msg); 
+        } 
+        else
+        { 
+            DB::beginTransaction(); 
+            $School = School::find($id);                  
+            $School["status"]=0;  
+            $School->save();   
+            if($School) {
+                $class      = 'success'; 
+                $msg      = 'School has been deleted successfully.';          
+            }                     
+            
+            else
+            {
+                $class      = 'failed'; 
+                $msg      = 'Unable to delete School!'; 
+            }
             DB::commit();    
             return Redirect::route('admin.school.view')->with('class', $class)->with('msg', $msg);  
             

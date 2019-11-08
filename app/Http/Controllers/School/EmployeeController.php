@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\School\Employee;
 use App\Models\School\EmployeeType;
+use App\Models\School\AttendanceEmployee;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache; 
 use App\Models\School\Test;
 use Excel;
 use App\Helpers\Helper;
-
-
+use Session;
 use DB, Validator,  Redirect, Auth, Crypt, Hash;
 class EmployeeController extends Controller
 {
@@ -51,12 +51,12 @@ class EmployeeController extends Controller
             $employee = Employee::create($data);  
             if($employee) {
                 $class      = 'success'; 
-                $msg      = 'Teacher has been registered successfully.';          
+                $msg      = 'Teacher has been added successfully.';          
             }
             else
             {
                 $class      = 'failed'; 
-                $msg      = 'Unable to register School!'; 
+                $msg      = 'Unable to add Teacher!'; 
             }
             DB::commit();    
             return Redirect::route('school.teacher.create')->with('class', $class)->with('msg', $msg);    
@@ -68,7 +68,8 @@ class EmployeeController extends Controller
         $results = Employee::whereStatus(1)->where('school_id',$uid)->orderBy('unique_id', 'ASC')->paginate(30);  
         $activemenu = 'a';
         $activelink='a2'; 
-        return view('school.teacher.view', compact('results','activelink','activemenu')); 
+        $msg="";
+        return view('school.teacher.view', compact('results','activelink','activemenu','msg')); 
     }
     
     public function edit($id) { 
@@ -121,11 +122,41 @@ class EmployeeController extends Controller
                 else
                 {
                     $class      = 'failed'; 
-                    $msg      = 'Unable to register School!'; 
+                    $msg      = 'Unable to updated Teacher!'; 
                 }
             DB::commit();    
             return Redirect::route('school.teacher.view')->with('class', $class)->with('msg', $msg);    
         }
     }
   
+    public function delete($id) {
+        $msg    = $class = '';   
+        $id     = Crypt::decrypt($id);  
+        $cnt = AttendanceEmployee::whereStatus(1)->where('unique_id', $id)->count();  
+        if($cnt < 1)        
+        {
+            DB::beginTransaction();
+                $employee = Employee::find($id);  
+                $employee["status"]=0;  
+                $employee->save();   
+                if($employee) {
+                    $class      = 'success'; 
+                    $msg      = 'Teacher has been deleted successfully.';          
+                }                     
+                
+                else
+                {
+                    $class      = 'failed'; 
+                    $msg      = 'Unable to delete Teacher!'; 
+                }
+            DB::commit();    
+            return Redirect::route('school.teacher.view')->with('class', $class)->with('msg', $msg);    
+        } 
+        else
+        {  
+            $class      = 'failed'; 
+            $msg      = 'Unable to delete Teacher!'; 
+            return Redirect::route('school.teacher.view')->with('class', $class)->with('msg', $msg);    
+        }
+    }
 }

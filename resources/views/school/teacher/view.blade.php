@@ -12,7 +12,9 @@
                 </div>
             </div>              
             <div class="card-body">
-            @include('include.message')             
+
+            @include('include.message')        
+                   
                 <div class="row">
                     <div class="col-md-12">     
                         <div class="table-responsive">    
@@ -39,10 +41,17 @@
                                     <td>
                                     {{  date('d-M-Y', strtotime($v->dor)) }}
                                         </td>                    
-                                    <td>
-                                        <a href="#" onclick="getdetails({{ $v->id}})"  data-toggle="modal" data-target="#viewModal" class="btn btn-primary btn-xs">View</a>
-                                        <a href="{{ route('school.teacher.edit', Crypt::encrypt($v->id)) }}" class="btn btn-info btn-xs">Edit</a>
-                                    </td>
+                                    <td> 
+                                    <center>
+                                    <form id="delete-form" action="{{ route('school.teacher.delete', Crypt::encrypt($v->id)) }}" onsubmit="return confirmDelete();" method="POST" >
+                                    
+                                        <a href="#" onclick="getdetails({{ $v->id}})"  data-toggle="modal" data-target="#viewModal"    class="btn btn-primary btn-circle btn-sm"><i class="fa fa-search "></i></a>
+                                        <a href="{{ route('school.teacher.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-info  btn-circle btn-sm"><i class="fa fa-pencil "></i></a>
+                                        {{ csrf_field() }}
+                                        <button   data-toggle="tooltip"  data-placement="top"  title="Delete"    class="btn btn-danger btn-circle btn-sm" ><i class="fa fa-trash-o"></i></button>
+                                    </form>
+                                    </center>
+                                  </td>
                                 </tr>
                                 @endforeach
                             </tbody>

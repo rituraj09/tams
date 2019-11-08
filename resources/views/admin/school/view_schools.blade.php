@@ -38,9 +38,13 @@
                                 <td>{{ $v->email }}</td> 
                                 <td> 
                                 <center>
-                                    <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-pencil "></i></a>  
-                                    <a href="{{ route('admin.school.password', Crypt::encrypt($v->id)) }}" class="btn btn-success btn-circle btn-sm"><i class="fa fa-lock "></i></a>  
-                          
+                                <form id="delete-form" action="{{ route('admin.school.delete', Crypt::encrypt($v->id)) }}" onsubmit="return confirmDelete();" method="POST" >
+                               
+                                      <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-pencil "></i></a>  
+                                    <a href="{{ route('admin.school.password', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Change Password" class="btn btn-success btn-circle btn-sm"><i class="fa fa-lock "></i></a>  
+                                    {{ csrf_field() }}
+                                            <button   data-toggle="tooltip"  data-placement="top"  title="Delete"    class="btn btn-danger btn-circle btn-sm" ><i class="fa fa-trash-o"></i></button>
+                                    </form>
                                       <center>
                                 </td>
                             </tr>
