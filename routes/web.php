@@ -18,7 +18,8 @@ Route::get('/', function () {
 Auth::routes(); 
 Route::group(['prefix' => 'admin'], function () {
   Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin.login');
-  Route::post('/login', 'AdminAuth\LoginController@login');
+  //Route::post('/login', 'AdminAuth\LoginController@login');
+  Route::post('/login', 'AdminAuth\LoginController@postLogin');
   Route::post('/logout', 'AdminAuth\LoginController@logout')->name('admin.logout');
 
   Route::get('/register', 'AdminAuth\RegisterController@showRegistrationForm')->name('admin.register');
@@ -36,10 +37,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => 'school'], function () {
   Route::get('/login', 'SchoolAuth\LoginController@showLoginForm')->name('school.login');
-  Route::post('/login', 'SchoolAuth\LoginController@login');
-  Route::post('/logout', 'SchoolAuth\LoginController@logout')->name('school.logout');
-  //Route::get('/register', 'SchoolAuth\RegisterController@showRegistrationForm')->name('admin.school.register');
- // Route::post('/register', 'SchoolAuth\RegisterController@register');
+ // Route::post('/login', 'SchoolAuth\LoginController@login');
+  Route::post('/login', 'SchoolAuth\LoginController@postLogin');
+  Route::post('/logout', 'SchoolAuth\LoginController@logout')->name('school.logout'); 
   Route::post('/password/email', 'SchoolAuth\ForgotPasswordController@sendResetLinkEmail')->name('school.password.request');
   Route::post('/password/reset', 'SchoolAuth\ResetPasswordController@reset')->name('school.password.email');
   Route::get('/password/reset', 'SchoolAuth\ForgotPasswordController@showLinkRequestForm')->name('school.password.reset');

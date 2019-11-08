@@ -25,6 +25,7 @@
                             <th >School Code</th>
                             <th >Phone No.</th>
                             <th >Email</th> 
+                            <th  >Status</th>
                             <th  ></th>
                         </tr>
                         </thead>
@@ -36,6 +37,12 @@
                                 <td>{{ $v->code  }}</td> 
                                 <td>{{ $v->phone  }}</td> 
                                 <td>{{ $v->email }}</td> 
+                                <td>
+                                <center>
+                                <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-circle btn-sm"><i class="fa fa-check-circle"></i></a> 
+                                <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-circle btn-sm"><i class="fa fa-ban"></i></a>   
+                                </center>
+                                </td>
                                 <td> 
                                 <center>
                                 <form id="delete-form" action="{{ route('admin.school.delete', Crypt::encrypt($v->id)) }}" onsubmit="return confirmDelete();" method="POST" >
@@ -44,8 +51,8 @@
                                     <a href="{{ route('admin.school.password', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Change Password" class="btn btn-success btn-circle btn-sm"><i class="fa fa-lock "></i></a>  
                                     {{ csrf_field() }}
                                             <button   data-toggle="tooltip"  data-placement="top"  title="Delete"    class="btn btn-danger btn-circle btn-sm" ><i class="fa fa-trash-o"></i></button>
-                                    </form>
-                                      <center>
+                                </form>
+                                </center>
                                 </td>
                             </tr>
                             @endforeach

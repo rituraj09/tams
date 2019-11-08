@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
+use Redirect;
 
 class LoginController extends Controller
 {
@@ -66,5 +67,20 @@ class LoginController extends Controller
 
         $request->session()->invalidate(); 
         return redirect('school/login');
+    }
+    public function postLogin(Request $request)
+    { 
+        $this->validate($request, [
+            'email'      => 'required',
+            'password'      => 'required',
+        ]); 
+        if (auth()->guard('school')->attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'status' => '1', 'isactive' => '1']))
+        {   
+            return redirect('/school/home'); 
+        }        
+        else
+        {    
+            return Redirect::back()->with(['message' => 'Invalid credentials', 'alert-class' => 'alert-danger']);
+        }
     }
 }

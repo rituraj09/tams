@@ -43,7 +43,16 @@
                   </div> 
                     <form class="user" role="form" method="POST" action="{{ url('/admin/login') }}">
                         {{ csrf_field() }}
-                        
+                        @if(Session::has('message'))
+                        <div class="row">
+                          <div class="col-lg-12">
+                                <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                                      <button type="button" class="close" data-dismiss="alert">×</button>
+                                      {!! Session::get('message') !!}
+                                </div>
+                              </div>
+                        </div>
+                        @endif
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                       <input type="email" class="form-control form-control-user" id="email"  name="email" value="{{ old('email') }}" autofocus aria-describedby="emailHelp" placeholder="Enter Email Address...">
                       @if ($errors->has('email'))
