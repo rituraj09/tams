@@ -8,9 +8,9 @@ use App\Models\Admin\School;
 use App\Models\School\Employee; 
 use App\Models\School\Attendance;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cache; 
 
-use DB, Validator, Redirect, Auth, Crypt, Hash;
+use DB, Validator, Redirect, Auth, Crypt, Hash, Mail;
 class SchoolController extends Controller
 { 
 
@@ -32,10 +32,23 @@ class SchoolController extends Controller
              return Redirect::back()->withErrors($validator)->withInput();  
         } 
         else
-        { 
+        {             
+            $val = [];
+            $val['password'] = $data['password'];
             $data['password'] = bcrypt($data['password']); 
-            $School = School::create($data);  
+            $School = School::create($data);   
             if($School) {
+                $title = $data['name'];
+                $content = $val['password'];
+                $email = $data['email'];
+        
+                Mail::send('admin.school.mail', ['title' => $title, 'content' => $content, 'email' => $email], function ($message) use($request) 
+                { 
+                    $message->from('riturajborgohain@gmail.com', 'TAMS'); 
+                    $message->to($request->email ,'Account Created')->subject('New Account Created');
+        
+                });
+        
                 $class      = 'success'; 
                 $msg      = 'School has been registered successfully.';          
             }
@@ -172,5 +185,6 @@ class SchoolController extends Controller
         } 
             
     }
+    
     
 }

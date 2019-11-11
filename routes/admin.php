@@ -45,6 +45,7 @@ Route::group(['prefix'=>'school'], function() {
         'middleware' => ['admin'],
         'uses' => 'Admin\SchoolController@delete'
     ]);
+     
 });
  
 

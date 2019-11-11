@@ -39,8 +39,17 @@
                                 <td>{{ $v->email }}</td> 
                                 <td>
                                 <center>
-                                <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-circle btn-sm"><i class="fa fa-check-circle"></i></a> 
-                                <a href="{{ route('admin.school.edit', Crypt::encrypt($v->id)) }}"  data-toggle="tooltip" data-placement="top"  title="Edit" class="btn btn-circle btn-sm"><i class="fa fa-ban"></i></a>   
+                                @if($v->isactive==1)
+                                <?php $class1 ="btn btn-xs btn-success" ;
+                                $class2 ="btn  btn-xs btn-secondary " ;
+                                ?>  
+                                @else
+                                <?php $class1 ="btn btn-xs btn-secondary" ;
+                                $class2 ="btn  btn-xs btn-danger" ;
+                                    ?>  
+                                @endif 
+                                <a id="active_btn{{ $v->id}}" href="vascript:void(0)"  onclick="return block({{ $v->id}}, 1)"  class='{{ $class1 }}'  ><i class="fa fa-check-circle" data-toggle="tooltip" data-placement="top"  title="Active" ></i></a> 
+                                <a id="block_btn{{ $v->id}}" href="vascript:void(0)" onclick="return block({{ $v->id}}, 0)"  class='{{ $class2 }}' ><i class="fa fa-ban"  data-toggle="tooltip" data-placement="top"  title="Block" ></i></a>   
                                 </center>
                                 </td>
                                 <td> 
@@ -67,4 +76,63 @@
     </div>
 </div>
  </small>
+
+ <script> 
+function block(id,block) {   
+v=0;
+if(block == 1)
+{
+    var result = confirm('Are you sure, you want to active the account?'); 
+    
+    if (result) {
+            v=1; 
+        } else {
+            return false;
+    }
+}
+else
+{
+    var result = confirm('Are you sure, you want to block the account?'); 
+    
+    if (result) {
+            v=1;
+        } else {
+            return false;
+    }
+}
+if(v == 1)
+{
+if(id != '') {
+    url = data = '';  
+    data = 'id='+id + '&block='+block;
+    url  = "{{ route('post_block') }}";  
+        $.ajax({ 
+            data : data,
+            url  : url,
+            type : 'post', 
+            success:function(data) {    
+                $("#msg").html('Success!'); 
+                debugger;
+                if(data =='1')
+                {
+                    $("#block_btn"+id).attr('class','btn btn-xs btn-secondary');
+                    $("#active_btn"+id).attr('class','btn btn-xs btn-success');
+                }
+                else
+                {
+                    $("#block_btn"+id).attr('class','btn btn-xs btn-danger');
+                    $("#active_btn"+id).attr('class','btn btn-xs btn-secondary');
+                }
+            },
+            error:function (data) { 
+                console.log(data);
+                $("#msg").html('Somethings went wrong!');
+            }
+        });
+    }
+    
+    return true;
+}
+};  
+</script>
 @stop

@@ -229,13 +229,13 @@
                       <td>{{ $provider->attendance($v->id, $date)['l']}}</td>
                       @else
                       <td >
-                      <center> <i class="fa fa-flag text-danger" title="Data not upload"></i></center>
+                      <center> <i class="fa fa-flag text-danger" data-toggle="tooltip" data-placement="top"  title="Data not upload"></i></center>
                       </td>
                       <td >
-                      <center> <i class="fa fa-flag text-danger" title="Data not upload"></i></center>
+                      <center> <i class="fa fa-flag text-danger" data-toggle="tooltip" data-placement="top"  title="Data not upload"></i></center>
                       </td>
                       <td >
-                      <center> <i class="fa fa-flag text-danger" title="Data not upload"></i></center>
+                      <center> <i class="fa fa-flag text-danger" data-toggle="tooltip" data-placement="top"  title="Data not upload"></i></center>
                       </td>
                       @endif
                     </tr>

@@ -24,11 +24,11 @@
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <style>
-    .btn-group-xs > .btn > .btn-circle, .btn-xs {
-  padding: 4px;
-  font-size: 8px;
+ .btn-group-xs > .btn, .btn-xs {
+  padding: .20rem .2rem;
+  font-size: 11px;
   line-height: .5;
-  border-radius: 50%;
+  border-radius: .2rem;
 }
 .table
 {
@@ -152,6 +152,12 @@
   <!-- Page level custom scripts -->
 <script src="{{ asset('assets/js/demo/datatables-demo.js')}}"></script>  
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+  <script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+  </script>
 </body>
 
 </html>

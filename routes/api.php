@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/get_employee_info', 'REST\APIController@getDetails')->name('get_employee_info');
+Route::post('/post_block', 'REST\APIController@postBlock')->name('post_block'); 
