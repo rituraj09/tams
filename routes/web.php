@@ -38,8 +38,9 @@ Route::group(['prefix' => 'admin'], function () {
 Route::group(['prefix' => 'school'], function () {
   Route::get('/login', 'SchoolAuth\LoginController@showLoginForm')->name('school.login');
  // Route::post('/login', 'SchoolAuth\LoginController@login');
-  Route::post('/login', 'SchoolAuth\LoginController@postLogin');
-  Route::post('/logout', 'SchoolAuth\LoginController@logout')->name('school.logout'); 
+  Route::post('/login', 'SchoolAuth\LoginController@postLogin')->name('school.postLogin');
+  Route::get('/logout', 'SchoolAuth\LoginController@logout')->name('school.logout'); 
+  //Route::post('/postlogout', 'SchoolAuth\LoginController@postlogout')->name('school.postlogout'); 
   Route::post('/password/email', 'SchoolAuth\ForgotPasswordController@sendResetLinkEmail')->name('school.password.request');
   Route::post('/password/reset', 'SchoolAuth\ResetPasswordController@reset')->name('school.password.email');
   Route::get('/password/reset', 'SchoolAuth\ForgotPasswordController@showLinkRequestForm')->name('school.password.reset');

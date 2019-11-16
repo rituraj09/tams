@@ -9,6 +9,8 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">School Dashboard</h1>
     </div>
+    
+    @include('include.message')  
 
     <!-- Content Row -->
     <div class="row">
@@ -121,9 +123,7 @@
               <input type="hidden" name="p_fld" id="p_fld" value="{{ $p }}" >
               <input type="hidden" name="a_fld" id="a_fld" value="{{ $absent }}" >
               <input type="hidden" name="l_fld" id="l_fld" value="{{ $leave }}" >
-              <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" >
-
-            
+              <input type="hidden" name="m_fld" id="m_fld" value="{{ $mis }}" > 
                     <div class="h-100 py-4">   
                       <div id="clock" class="dark">
                         <div class="display">

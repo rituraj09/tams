@@ -8,6 +8,7 @@
             <div class="card-header py-3">
                 <div class="row no-gutters align-items-center">
                     <h6 class="m-0 font-weight-bold text-primary col mr-2">View Teacher</h6>
+      
         
                 </div>
             </div>              

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\School\Employee;
 use App\Models\School\EmployeeType;
 use App\Models\School\Attendance;
+use App\Models\Admin\School;
 use App\Models\School\AttendanceEmployee; 
 use App\Models\School\AttendanceType;
 use Illuminate\Support\Facades\Storage;
@@ -24,9 +25,10 @@ class HomeController extends Controller
      *
      * @return void
      */
+    protected $user;
     public function __construct()
-    {
-        $this->middleware('auth');
+    { 
+        $this->middleware('auth'); 
     }
 
     /**
@@ -34,11 +36,54 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function setpassword()
+    {
+        $activemenu = '';
+        $activelink=''; 
+        if(Auth::user()->set_password==0)
+        {
+            return view('school.setpassword', compact('activelink','activemenu' ));
+        }
+        return Redirect::route('school.home');
+    }
+    public function savepassword(Request $request)
+    {
+        $msg    = $class = '';
+        $data = $request->all();  
+        $id     = Auth::user()->id; 
+        $validator = Validator::make($data, School::$rulespassword); 
+        if ($validator->fails())
+        {
+            return Redirect::back()->withErrors($validator)->withInput();  
+        } 
+        else
+        {  
+            DB::beginTransaction(); 
+            $School = School::find($id);                  
+            $data['password'] = bcrypt($data['password']); 
+            $data['set_password'] = 1; 
+            $School->fill($data);  
+            $School->save();   
+            if($School) {
+                $class      = 'success'; 
+                $msg      = 'password has been updated successfully.';          
+            }
+            else
+            {
+                $class      = 'failed'; 
+                $msg      = 'Unable to updated password!'; 
+            }    
+            DB::commit();    
+            return Redirect::route('school.home')->with('class', $class)->with('msg', $msg);   
+            
+        } 
+    }
     public function index()
     {
+      
         $activemenu = '01';
         $activelink='01';
-        $school_id=  Auth::user()->id; 
+        $school_id=  Auth::user()->id ; 
         $date = now(); 
         $date =  date('Y-m-d', strtotime($date));  
        

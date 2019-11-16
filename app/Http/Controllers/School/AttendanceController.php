@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache; 
 use App\Models\School\Test;
 use Excel;
+use File;
 use App\Helpers\Helper;
 
 
@@ -199,5 +200,48 @@ class AttendanceController extends Controller
             DB::commit(); 
         }
         return Redirect::route('school.attendance.upload')->with('class', $class)->with('msg', $msg);    
+    }
+
+    public function getfiles()
+    {  
+        $files = array();
+        foreach (glob("D:/test/*.xls") as $key => $file ) 
+        { 
+            $files[] = basename($file);
+            $data = Excel::load("D:/test/".$files[$key], function($reader) {      
+                $results = $reader->setHeaderRow(5);
+                return $results;  
+            })->get();  
+            $arr = [];
+            if($data->count())
+            {
+                foreach ($data as $k => $value) 
+                { 
+                    if(!$value->emp_code)
+                    {
+                        break;
+                    } 
+                    $arr[] = $value->all(); 
+                }  
+                $results = $arr; 
+                $dateval = Excel::load("D:/test/".$files[$key], function($reader) {   
+                    $results =  $reader->skipRows(2)->takeRows(1)->get();        
+                    $results = $reader->skipColumns(1)->takeColumns(2)->get();  
+                    return $results;
+                })->get();
+
+                $dtt = date('Y-m-d', strtotime($dateval[0][0]));  
+                $date[] =    date('d-m-Y', strtotime($dateval[0][0]));   
+
+                $compname = Excel::load("D:/test/".$files[$key], function($reader) {    
+                    $results = $reader->noHeading()->skipRows(1)->takeRows(1)->takeColumns(1)->get();  
+                  
+                    return $results;
+                })->get();
+                $name[]= $compname;
+                $val[] = $results;
+            } 
+        } 
+         return view('school.attendance.view', compact('val','files','date','name' ));;
     }
 }

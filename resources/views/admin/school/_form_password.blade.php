@@ -1,4 +1,16 @@
- 
+  
+<div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
+    <div class="row">
+        {!! Form::label('name', 'School Name :', array('class' => 'col-md-2 control-label')) !!}
+        <div class="col-md-5">
+        <label  class="control-label" >{{ $school->name}}
+        
+        </label> 
+          </div>
+        
+    </div>
+</div>
+
 <div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
     <div class="row">
         {!! Form::label('password', 'Password :', array('class' => 'col-md-2 control-label')) !!}

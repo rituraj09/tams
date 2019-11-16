@@ -8,7 +8,7 @@ class School extends Model
 {
     protected $fillable = array(
 		'name', 'code', 'state', 'district', 'email', 'phone',
-		'password' 
+		'password' ,'set_password'
 
     );
 	protected $table    	= 'schools';

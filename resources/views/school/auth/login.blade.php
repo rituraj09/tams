@@ -9,6 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>TAMS | School - Login</title>
 
   <!-- Custom fonts for this template-->
@@ -40,11 +41,10 @@
                     <hr class="sidebar-divider my-2"> 
               
                 <p class="mb-2">School Login </p> 
-                  </div> 
-                    <form class="user" role="form" method="POST" action="{{ url('/school/login') }}">
-                        {{ csrf_field() }}
-                        @if(Session::has('message'))
-              <div class="row">
+                  </div>  
+                    {!! Form::open(array('route' => 'school.postLogin', 'id' => 'school.postLogin', 'class' => 'user', 'role' => 'form', 'method' => 'POST')) !!}
+                    @if(Session::has('message'))
+                  <div class="row">
                  <div class="col-lg-12">
                        <div class="alert {{ Session::get('alert-class', 'alert-info') }}">
                              <button type="button" class="close" data-dismiss="alert">×</button>
@@ -84,7 +84,7 @@
                     <a class="btn btn-warning btn-user btn-block" href="{{ route('index') }}">
                         Back
                     </a>
-                  </form>
+            {!! Form::close() !!} 
                 
                  
                 </div>

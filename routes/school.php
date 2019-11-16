@@ -2,6 +2,15 @@
  
 
 Route::get('/home', 'School\HomeController@index')->name('home');
+Route::get('/setpassword', 'School\HomeController@setpassword')->name('setpassword');
+
+Route::group(['prefix'=>'profile'], function() { 
+    Route::post('/update_password/{id}', [
+        'as' => 'profile.update_password',
+        'middleware' => ['school'],
+        'uses' => 'School\HomeController@savepassword'
+    ]);
+});
   
 Route::group(['prefix'=>'teacher'], function() { 
     Route::get('/create', [
@@ -51,4 +60,9 @@ Route::group(['prefix'=>'teacher'], function() {
         'middleware' => ['school'],
         'uses' => 'School\EmployeeController@delete'
     ]);
+    Route::get('/getfiles', [
+        'as' => 'teacher.getfiles',
+        'middleware' => ['school'],
+        'uses' => 'School\AttendanceController@getfiles'
+    ]); 
 });

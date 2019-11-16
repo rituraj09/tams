@@ -9,6 +9,7 @@ use App\Models\School\Employee;
 use App\Models\School\Attendance;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache; 
+use Illuminate\Support\Str;
 
 use DB, Validator, Redirect, Auth, Crypt, Hash, Mail;
 class SchoolController extends Controller
@@ -34,8 +35,9 @@ class SchoolController extends Controller
         else
         {             
             $val = [];
-            $val['password'] = $data['password'];
-            $data['password'] = bcrypt($data['password']); 
+            $pwd = Str::random(6) ;
+            $val['password'] =  $pwd ;
+            $data['password'] = bcrypt( $pwd ); 
             $School = School::create($data);   
             if($School) {
                 $title = $data['name'];
@@ -44,8 +46,8 @@ class SchoolController extends Controller
         
                 Mail::send('admin.school.mail', ['title' => $title, 'content' => $content, 'email' => $email], function ($message) use($request) 
                 { 
-                    $message->from('riturajborgohain@gmail.com', 'TAMS'); 
-                    $message->to($request->email ,'Account Created')->subject('New Account Created');
+                    $message->from('isgolaghat.noreply@gmail.com', 'no-reply'); 
+                    $message->to($request->email ,'Account Created')->subject('New account has been created');
         
                 });
         
@@ -115,6 +117,7 @@ class SchoolController extends Controller
         }  
     }
     public function password($id) {
+      
         $activemenu = 'a';
         $activelink='a2';
         $id         = Crypt::decrypt($id);

@@ -11,6 +11,7 @@
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
+@if(Auth::user()->set_password==1)
 <!-- Nav Item - Dashboard -->
 <li class="nav-item  {{ $activelink =="01" ? 'active' : '' }}" >
   <a class="nav-link" href="{{ route('school.home') }}">
@@ -71,5 +72,5 @@
 <div class="text-center d-none d-md-inline">
   <button class="rounded-circle border-0" id="sidebarToggle"></button>
 </div>
-
+@endif
 </ul>

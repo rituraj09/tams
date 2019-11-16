@@ -18,9 +18,9 @@ class RedirectIfNotSchool
 	public function handle($request, Closure $next, $guard = 'school')
 	{
 	    if (!Auth::guard($guard)->check()) {
+			
 	        return redirect('school/login');
-	    }
-
+	    } 
 	    return $next($request);
 	}
 }

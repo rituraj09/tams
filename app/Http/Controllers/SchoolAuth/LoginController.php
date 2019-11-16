@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\SchoolAuth;
-
+ 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +31,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    public $redirectTo = '/school/home';
-
+    public $redirectTo = '/school/home'; 
+    protected $redirectAfterLogout = 'school/login';
     /**
      * Create a new controller instance.
      *
@@ -49,7 +49,7 @@ class LoginController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm()
-    {
+    {  
         return view('school.auth.login');
     } 
     /**
@@ -61,26 +61,45 @@ class LoginController extends Controller
     {
         return Auth::guard('school');
     }
-    public function logout(Request $request)
-    {
-        $this->guard()->logout();
 
+  /*  public function logout(Request $request)
+    {
+       // dd($request->all());
+        $this->guard()->logout();  
+        $request->session()->flush(); 
+        $request->session()->regenerate();
         $request->session()->invalidate(); 
         return redirect('school/login');
-    }
+    }*/
+
     public function postLogin(Request $request)
-    { 
+    {   
+       // dd($request->all());
+        
         $this->validate($request, [
             'email'      => 'required',
-            'password'      => 'required',
+            'password'   => 'required',
         ]); 
         if (auth()->guard('school')->attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'status' => '1', 'isactive' => '1']))
-        {   
-            return redirect('/school/home'); 
+        {    
+            $setpwd = auth()->guard('school')->user()->set_password;
+			if($setpwd==0)
+			{
+				return redirect('school/setpassword');
+			} 
+			else{
+                return redirect('/school/home');  
+			}            
         }        
         else
         {    
             return Redirect::back()->with(['message' => 'Invalid credentials', 'alert-class' => 'alert-danger']);
+        }
+    }
+ 
+    protected function authenticated(Request $request, $user) {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
         }
     }
 }

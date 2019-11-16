@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
   <title>TAMS | School</title>
 
   <!-- Custom fonts for this template-->
@@ -117,11 +116,8 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="{{ url('/school/logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Logout</a>  
-          <form id="logout-form" action="{{ url('/school/logout') }}" method="POST" style="display: none;">
-              {{ csrf_field() }}
-          </form>
+       <a  class="btn btn-primary"  href="{{ route('school.logout') }}">Logout</a>
+         
         </div>
       </div>
     </div>
