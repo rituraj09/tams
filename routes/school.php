@@ -2,14 +2,28 @@
  
 
 Route::get('/home', 'School\HomeController@index')->name('home');
-Route::get('/setpassword', 'School\HomeController@setpassword')->name('setpassword');
-
+Route::get('/setpassword', 'School\HomeController@setpassword')->name('setpassword');  
 Route::group(['prefix'=>'profile'], function() { 
-    Route::post('/update_password/{id}', [
-        'as' => 'profile.update_password',
+    Route::get('/password', [
+        'as' => 'profile.password',
+        'middleware' => ['school'],
+        'uses' => 'School\HomeController@changepassword'
+    ]);  
+    Route::post('/set_password', [
+        'as' => 'profile.set_password',
         'middleware' => ['school'],
         'uses' => 'School\HomeController@savepassword'
     ]);
+    Route::post('/update_password', [
+        'as' => 'profile.update_password',
+        'middleware' => ['school'],
+        'uses' => 'School\HomeController@update_password'
+    ]);
+    Route::get('/details', [
+        'as' => 'profile.details',
+        'middleware' => ['school'],
+        'uses' => 'School\HomeController@details'
+    ]);  
 });
   
 Route::group(['prefix'=>'teacher'], function() { 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Hesto\MultiAuth\Traits\LogsoutGuard;
 use Redirect;
+use Session;
 
 class LoginController extends Controller
 {
@@ -62,15 +63,13 @@ class LoginController extends Controller
         return Auth::guard('school');
     }
 
-  /*  public function logout(Request $request)
+   public function logout(Request $request)
     {
        // dd($request->all());
-        $this->guard()->logout();  
-        $request->session()->flush(); 
-        $request->session()->regenerate();
+       Auth::logout();
         $request->session()->invalidate(); 
         return redirect('school/login');
-    }*/
+    } 
 
     public function postLogin(Request $request)
     {   
@@ -82,14 +81,15 @@ class LoginController extends Controller
         ]); 
         if (auth()->guard('school')->attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'status' => '1', 'isactive' => '1']))
         {    
-            $setpwd = auth()->guard('school')->user()->set_password;
+            
+            return redirect('/school/home');  
+          /*  $setpwd = auth()->guard('school')->user()->set_password;
 			if($setpwd==0)
 			{
 				return redirect('school/setpassword');
 			} 
 			else{
-                return redirect('/school/home');  
-			}            
+			}      */      
         }        
         else
         {    

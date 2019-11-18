@@ -42,6 +42,9 @@
               
                 <p class="mb-2">School Login </p> 
                   </div>  
+                  @if(Session::has('key')) 
+                      {{Session::pull('key')}}
+                  @endif
                     {!! Form::open(array('route' => 'school.postLogin', 'id' => 'school.postLogin', 'class' => 'user', 'role' => 'form', 'method' => 'POST')) !!}
                     @if(Session::has('message'))
                   <div class="row">

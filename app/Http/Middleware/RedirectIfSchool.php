@@ -17,7 +17,7 @@ class RedirectIfSchool
 	 */
 	public function handle($request, Closure $next, $guard = 'school')
 	{
-	    if (Auth::guard($guard)->check()) {  
+	   /* if (Auth::guard($guard)->check()) {  
 			$setpwd = Auth::guard($guard)->user()->set_password;
 			if($setpwd==0)
 			{
@@ -26,8 +26,10 @@ class RedirectIfSchool
 			else{
 				return redirect('school/home');
 			}
+	    }*/
+		if (Auth::guard($guard)->check()) {
+	        return redirect('school/home');
 	    }
-
 	    return $next($request);
 	}
 }

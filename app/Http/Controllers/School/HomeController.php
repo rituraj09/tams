@@ -66,7 +66,7 @@ class HomeController extends Controller
             $School->save();   
             if($School) {
                 $class      = 'success'; 
-                $msg      = 'password has been updated successfully.';          
+                $msg      = 'Password has been updated successfully.';          
             }
             else
             {
@@ -80,7 +80,11 @@ class HomeController extends Controller
     }
     public function index()
     {
-      
+        $setpwd=Auth::user()->set_password ; 
+        if($setpwd==0)
+        {
+            return redirect('school/setpassword');
+        }     
         $activemenu = '01';
         $activelink='01';
         $school_id=  Auth::user()->id ; 
@@ -195,5 +199,45 @@ class HomeController extends Controller
          'attendance_employees.attendance_type','attendance_employees.remarks','attendances.upload_status')->orderBy('attendance_employees.id','ASC')->get();
  
          return view('school.home',compact('activelink','activemenu',  'results','teacher','present','absent', 'leave', 'p', 'mis' ));
+    }
+
+    public function changepassword()
+    {
+        $activemenu = '';
+        $activelink='';      
+    	return view('school.changepassword', compact('activelink','activemenu'));
+    }
+    public function update_password(Request $request)
+    {  
+      
+        if (!(Hash::check($request->get('old_password'), Auth::user()->password))) {
+            $class      = 'failed'; 
+            return Redirect::back()->with('class', $class)->with('msg','Current password does not match');   
+        } 
+        if(strcmp($request->get('old_password'), $request->get('new_password')) == 0){
+            $class      = 'failed'; 
+            return Redirect::back()->with('class', $class)->with('msg','New Password cannot be same as your current password');   
+ 
+        }
+        $validatedData = $request->validate([
+            'new_password' => 'required|min:6|confirmed',
+            'new_password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:6' 
+        ]);
+        //Change Password
+        $user = Auth::user(); 
+        $user->password = bcrypt($request->get('new_password'));  
+        $user->save();
+        $class      = 'success'; 
+        $msg      = 'Password has been updated successfully.';        
+        return Redirect::route('school.profile.password')->with('class', $class)->with('msg', $msg);  
+    }
+    public function details()
+    {
+        $activemenu = '';
+        $activelink='';      
+        
+        $school = School::find(Auth::user()->id);   
+    	return view('school.details', compact('activelink','activemenu','school'));
     }
 }

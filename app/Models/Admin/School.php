@@ -44,6 +44,14 @@ class School extends Model
     public function attendance()
     {
         return $this->hasMany('App\Models\School\Attendance','school_id'); 
-	} 
+    } 
+    public function stateName()
+    {
+        return $this->belongsTo('App\Models\State','state'); 
+    } 
+    public function districtName()
+    {
+        return $this->belongsTo('App\Models\District','district'); 
+    } 
 	 
 }
